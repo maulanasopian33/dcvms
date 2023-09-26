@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "01ea68d8c10af0795392ede4191e7df1",
+    "content-hash": "d5c2ec615c71920c3092aa6187e9d514",
     "packages": [
         {
             "name": "brick/math",
@@ -126,73 +126,6 @@
                 }
             ],
             "time": "2022-02-21T13:15:14+00:00"
-        },
-        {
-            "name": "darthsoup/laravel-whmcs",
-            "version": "1.2.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/darthsoup/laravel-whmcs.git",
-                "reference": "3b5b45029084c994bc94ae7ee9b5451735b6ba3e"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/darthsoup/laravel-whmcs/zipball/3b5b45029084c994bc94ae7ee9b5451735b6ba3e",
-                "reference": "3b5b45029084c994bc94ae7ee9b5451735b6ba3e",
-                "shasum": ""
-            },
-            "require": {
-                "darthsoup/php-whmcs-api": "~1.3",
-                "ext-json": "*",
-                "graham-campbell/manager": "^5.0",
-                "illuminate/events": "^8.0|^9.0|^10.0",
-                "illuminate/session": "^8.0|^9.0|^10.0",
-                "illuminate/support": "^8.0|^9.0|^10.0",
-                "php": "^7.4|^8.0"
-            },
-            "require-dev": {
-                "guzzlehttp/guzzle": "^7.0",
-                "http-interop/http-factory-guzzle": "^1.0",
-                "mockery/mockery": "~1.3",
-                "nunomaduro/larastan": "^1.0.4",
-                "orchestra/testbench": "^5.0|^6.0|^7.0|^8.0",
-                "phpunit/phpunit": "^9.3"
-            },
-            "suggest": {
-                "guzzlehttp/guzzle": "A PSR-18 compatible HTTP Client (^7.0)"
-            },
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "providers": [
-                        "DarthSoup\\Whmcs\\WhmcsServiceProvider"
-                    ],
-                    "aliases": {
-                        "Whmcs": "DarthSoup\\Whmcs\\Facades\\Whmcs"
-                    }
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "DarthSoup\\Whmcs\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Kevin Krummnacker",
-                    "email": "kevin.krummnacker@gmail.com"
-                }
-            ],
-            "description": "WHMCS API interface for Laravel 7.0 and up",
-            "support": {
-                "issues": "https://github.com/darthsoup/laravel-whmcs/issues",
-                "source": "https://github.com/darthsoup/laravel-whmcs/tree/1.2.1"
-            },
-            "time": "2023-03-05T00:58:42+00:00"
         },
         {
             "name": "darthsoup/php-whmcs-api",
@@ -825,76 +758,6 @@
             "time": "2022-02-20T15:07:15+00:00"
         },
         {
-            "name": "graham-campbell/manager",
-            "version": "v5.0.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/GrahamCampbell/Laravel-Manager.git",
-                "reference": "f1cf95a0bb11ba086387b8049e0e40b82d01588d"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/GrahamCampbell/Laravel-Manager/zipball/f1cf95a0bb11ba086387b8049e0e40b82d01588d",
-                "reference": "f1cf95a0bb11ba086387b8049e0e40b82d01588d",
-                "shasum": ""
-            },
-            "require": {
-                "illuminate/contracts": "^8.75 || ^9.0 || ^10.0",
-                "illuminate/support": "^8.75 || ^9.0 || ^10.0",
-                "php": "^7.4.15 || ^8.0.2"
-            },
-            "require-dev": {
-                "graham-campbell/analyzer": "^4.0",
-                "graham-campbell/testbench-core": "^4.0",
-                "mockery/mockery": "^1.5.1",
-                "phpunit/phpunit": "^9.6.3 || ^10.0.12"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "GrahamCampbell\\Manager\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Graham Campbell",
-                    "email": "hello@gjcampbell.co.uk",
-                    "homepage": "https://github.com/GrahamCampbell"
-                }
-            ],
-            "description": "Manager Provides Some Manager Functionality For Laravel",
-            "keywords": [
-                "Graham Campbell",
-                "GrahamCampbell",
-                "Laravel Manager",
-                "Laravel-Manager",
-                "connector",
-                "framework",
-                "interface",
-                "laravel",
-                "manager"
-            ],
-            "support": {
-                "issues": "https://github.com/GrahamCampbell/Laravel-Manager/issues",
-                "source": "https://github.com/GrahamCampbell/Laravel-Manager/tree/v5.0.0"
-            },
-            "funding": [
-                {
-                    "url": "https://github.com/GrahamCampbell",
-                    "type": "github"
-                },
-                {
-                    "url": "https://tidelift.com/funding/github/packagist/graham-campbell/manager",
-                    "type": "tidelift"
-                }
-            ],
-            "time": "2023-02-25T23:53:34+00:00"
-        },
-        {
             "name": "graham-campbell/result-type",
             "version": "v1.1.1",
             "source": {
@@ -1362,48 +1225,6 @@
             "time": "2023-08-27T10:19:19+00:00"
         },
         {
-            "name": "jumbojett/openid-connect-php",
-            "version": "v0.9.10",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/jumbojett/OpenID-Connect-PHP.git",
-                "reference": "45aac47b525f0483dd4db3324bb1f1cab4666061"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/jumbojett/OpenID-Connect-PHP/zipball/45aac47b525f0483dd4db3324bb1f1cab4666061",
-                "reference": "45aac47b525f0483dd4db3324bb1f1cab4666061",
-                "shasum": ""
-            },
-            "require": {
-                "ext-curl": "*",
-                "ext-json": "*",
-                "paragonie/random_compat": ">=2",
-                "php": ">=5.4",
-                "phpseclib/phpseclib": "~2.0 || ^3.0"
-            },
-            "require-dev": {
-                "roave/security-advisories": "dev-master",
-                "yoast/phpunit-polyfills": "^1.0"
-            },
-            "type": "library",
-            "autoload": {
-                "classmap": [
-                    "src/"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "Apache-2.0"
-            ],
-            "description": "Bare-bones OpenID Connect client",
-            "support": {
-                "issues": "https://github.com/jumbojett/OpenID-Connect-PHP/issues",
-                "source": "https://github.com/jumbojett/OpenID-Connect-PHP/tree/v0.9.10"
-            },
-            "time": "2022-09-30T12:34:46+00:00"
-        },
-        {
             "name": "laravel/framework",
             "version": "v10.22.0",
             "source": {
@@ -1854,76 +1675,6 @@
                 "source": "https://github.com/laravel/serializable-closure"
             },
             "time": "2023-07-14T13:56:28+00:00"
-        },
-        {
-            "name": "laravel/socialite",
-            "version": "v5.9.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/laravel/socialite.git",
-                "reference": "49ecc4c907ed88c1254bae991c6b2948945645c2"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/laravel/socialite/zipball/49ecc4c907ed88c1254bae991c6b2948945645c2",
-                "reference": "49ecc4c907ed88c1254bae991c6b2948945645c2",
-                "shasum": ""
-            },
-            "require": {
-                "ext-json": "*",
-                "guzzlehttp/guzzle": "^6.0|^7.0",
-                "illuminate/contracts": "^6.0|^7.0|^8.0|^9.0|^10.0",
-                "illuminate/http": "^6.0|^7.0|^8.0|^9.0|^10.0",
-                "illuminate/support": "^6.0|^7.0|^8.0|^9.0|^10.0",
-                "league/oauth1-client": "^1.10.1",
-                "php": "^7.2|^8.0"
-            },
-            "require-dev": {
-                "mockery/mockery": "^1.0",
-                "orchestra/testbench": "^4.0|^5.0|^6.0|^7.0|^8.0",
-                "phpstan/phpstan": "^1.10",
-                "phpunit/phpunit": "^8.0|^9.3"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "5.x-dev"
-                },
-                "laravel": {
-                    "providers": [
-                        "Laravel\\Socialite\\SocialiteServiceProvider"
-                    ],
-                    "aliases": {
-                        "Socialite": "Laravel\\Socialite\\Facades\\Socialite"
-                    }
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Laravel\\Socialite\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Taylor Otwell",
-                    "email": "taylor@laravel.com"
-                }
-            ],
-            "description": "Laravel wrapper around OAuth 1 & OAuth 2 libraries.",
-            "homepage": "https://laravel.com",
-            "keywords": [
-                "laravel",
-                "oauth"
-            ],
-            "support": {
-                "issues": "https://github.com/laravel/socialite/issues",
-                "source": "https://github.com/laravel/socialite"
-            },
-            "time": "2023-09-07T16:13:53+00:00"
         },
         {
             "name": "laravel/tinker",
@@ -2581,82 +2332,6 @@
             "time": "2023-08-05T12:09:49+00:00"
         },
         {
-            "name": "league/oauth1-client",
-            "version": "v1.10.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/thephpleague/oauth1-client.git",
-                "reference": "d6365b901b5c287dd41f143033315e2f777e1167"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/oauth1-client/zipball/d6365b901b5c287dd41f143033315e2f777e1167",
-                "reference": "d6365b901b5c287dd41f143033315e2f777e1167",
-                "shasum": ""
-            },
-            "require": {
-                "ext-json": "*",
-                "ext-openssl": "*",
-                "guzzlehttp/guzzle": "^6.0|^7.0",
-                "guzzlehttp/psr7": "^1.7|^2.0",
-                "php": ">=7.1||>=8.0"
-            },
-            "require-dev": {
-                "ext-simplexml": "*",
-                "friendsofphp/php-cs-fixer": "^2.17",
-                "mockery/mockery": "^1.3.3",
-                "phpstan/phpstan": "^0.12.42",
-                "phpunit/phpunit": "^7.5||9.5"
-            },
-            "suggest": {
-                "ext-simplexml": "For decoding XML-based responses."
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.0-dev",
-                    "dev-develop": "2.0-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "League\\OAuth1\\Client\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Ben Corlett",
-                    "email": "bencorlett@me.com",
-                    "homepage": "http://www.webcomm.com.au",
-                    "role": "Developer"
-                }
-            ],
-            "description": "OAuth 1.0 Client Library",
-            "keywords": [
-                "Authentication",
-                "SSO",
-                "authorization",
-                "bitbucket",
-                "identity",
-                "idp",
-                "oauth",
-                "oauth1",
-                "single sign on",
-                "trello",
-                "tumblr",
-                "twitter"
-            ],
-            "support": {
-                "issues": "https://github.com/thephpleague/oauth1-client/issues",
-                "source": "https://github.com/thephpleague/oauth1-client/tree/v1.10.1"
-            },
-            "time": "2022-04-15T14:02:14+00:00"
-        },
-        {
             "name": "league/oauth2-client",
             "version": "2.7.0",
             "source": {
@@ -2725,6 +2400,72 @@
                 "source": "https://github.com/thephpleague/oauth2-client/tree/2.7.0"
             },
             "time": "2023-04-16T18:19:15+00:00"
+        },
+        {
+            "name": "league/oauth2-github",
+            "version": "3.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/thephpleague/oauth2-github.git",
+                "reference": "97f31cd70e76f81e8f5b4e2ab6f3708e2db7ac18"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/thephpleague/oauth2-github/zipball/97f31cd70e76f81e8f5b4e2ab6f3708e2db7ac18",
+                "reference": "97f31cd70e76f81e8f5b4e2ab6f3708e2db7ac18",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*",
+                "league/oauth2-client": "^2.0",
+                "php": "^7.3 || ^8.0"
+            },
+            "require-dev": {
+                "mockery/mockery": "^1.4",
+                "phpunit/phpunit": "^9.5",
+                "squizlabs/php_codesniffer": "^3.6"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "League\\OAuth2\\Client\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Steven Maguire",
+                    "email": "stevenmaguire@gmail.com",
+                    "homepage": "https://github.com/stevenmaguire"
+                },
+                {
+                    "name": "Woody Gilk",
+                    "email": "woody.gilk@gmail.com",
+                    "homepage": "https://github.com/shadowhand"
+                }
+            ],
+            "description": "Github OAuth 2.0 Client Provider for The PHP League OAuth2-Client",
+            "keywords": [
+                "authorisation",
+                "authorization",
+                "client",
+                "github",
+                "oauth",
+                "oauth2"
+            ],
+            "support": {
+                "issues": "https://github.com/thephpleague/oauth2-github/issues",
+                "source": "https://github.com/thephpleague/oauth2-github/tree/3.1.0"
+            },
+            "time": "2022-11-04T14:01:49+00:00"
         },
         {
             "name": "league/oauth2-server",
@@ -2986,56 +2727,58 @@
             "time": "2021-06-28T04:27:21+00:00"
         },
         {
-            "name": "maicol07/oidc-client",
-            "version": "1.2",
+            "name": "miniorange/oauth-laravel-free",
+            "version": "v2.0.6",
             "source": {
                 "type": "git",
-                "url": "https://github.com/maicol07/oidc-client-php.git",
-                "reference": "b171b97e23d62983ff3d128ea18258eb1b5df1db"
+                "url": "https://github.com/miniOrangeDev/oauth-laravel-free.git",
+                "reference": "de277939a5e211d50c34600b13dade948ab1b62b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/maicol07/oidc-client-php/zipball/b171b97e23d62983ff3d128ea18258eb1b5df1db",
-                "reference": "b171b97e23d62983ff3d128ea18258eb1b5df1db",
+                "url": "https://api.github.com/repos/miniOrangeDev/oauth-laravel-free/zipball/de277939a5e211d50c34600b13dade948ab1b62b",
+                "reference": "de277939a5e211d50c34600b13dade948ab1b62b",
                 "shasum": ""
             },
             "require": {
-                "ext-curl": "*",
-                "ext-json": "*",
-                "paragonie/random_compat": ">=2",
-                "php": ">=5.4",
-                "phpseclib/phpseclib": "~2.0"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "^4.8",
-                "roave/security-advisories": "dev-master"
+                "laravel/framework": ">=5.2",
+                "php": "^5.1 || ^7.1 || ^8.0"
             },
             "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "provider\\oauthServiceProvider"
+                    ]
+                }
+            },
             "autoload": {
+                "files": [
+                    "src/connector.php"
+                ],
+                "psr-4": {
+                    "provider\\": "provider/"
+                },
                 "classmap": [
                     "src/"
                 ]
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
-                "Apache-2.0"
+                "BSD-3-Clause"
             ],
-            "description": "OpenID Connect client",
-            "keywords": [
-                "OpenID Connect",
-                "RFC7009",
-                "RFC7662",
-                "SSO",
-                "client",
-                "oauth 2",
-                "oidc",
-                "rfc6749",
-                "rfc7636"
+            "authors": [
+                {
+                    "name": "miniOrange Security Software Pvt Ltd",
+                    "email": "laravelsupport@xecurify.com"
+                }
             ],
+            "description": "Laravel OAuth Single Sign On Solution. Make yourLaravel application as OAuth Client using this plugin. Laravel end users can login into Laravel application using their OAuth Provider / Server credentials.",
             "support": {
-                "source": "https://github.com/maicol07/oidc-client-php/tree/1.2"
+                "issues": "https://github.com/miniOrangeDev/oauth-laravel-free/issues",
+                "source": "https://github.com/miniOrangeDev/oauth-laravel-free/tree/v2.0.6"
             },
-            "time": "2021-09-27T16:57:03+00:00"
+            "time": "2023-04-25T12:14:59+00:00"
         },
         {
             "name": "monolog/monolog",

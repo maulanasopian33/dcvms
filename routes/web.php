@@ -5,6 +5,9 @@ use App\Http\Controllers\dcvms;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
 use Jumbojett\OpenIDConnectClient;
+use DarthSoup\WhmcsApi\Client;
+use Illuminate\Http\Request;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -21,7 +24,11 @@ Route::get('/', function () {
 });
 
 Route::get('/callback', function(){
-    return 'aa';
+    $client = new Client();
+        $client->authenticate(env('WHMCS_API_IDENTIFIER'), env('WHMCS_API_SECRET'), Client::AUTH_API_CREDENTIALS);
+        $client->url(env('WHMCS_API_URL'));
+        $clientProduct = $client->Authentication()->listOAuthCredentials();
+    return $clientProduct;
 });
 Route::get('/token',function(){
     $user = User::find(2);
@@ -61,3 +68,7 @@ Route::get('/product',function(){
 
 Route::get('auth/whmcs', [AuthController::class,'redirectToProvider']);
 Route::get('auth/whmcs/callback', [AuthController::class,'handleProviderCallback']);
+
+Route::get('/a',function(Request $req){
+    return $req;
+})->name('datawhmcs');

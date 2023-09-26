@@ -33,6 +33,13 @@ class dcvms extends Controller
         }
 
     }
+    static public function getdata($data){
+        $client = new Client();
+        $client->authenticate(env('WHMCS_API_IDENTIFIER'), env('WHMCS_API_SECRET'), Client::AUTH_API_CREDENTIALS);
+        $client->url(env('WHMCS_API_URL'));
+        $clientData = $client->Client()->getClientsDetails(['email'=>$data['email']]);
+        return $clientData;
+    }
     static public function getProduct(){
         $client = new Client();
         $client->authenticate(env('WHMCS_API_IDENTIFIER'), env('WHMCS_API_SECRET'), Client::AUTH_API_CREDENTIALS);

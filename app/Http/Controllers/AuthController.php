@@ -18,8 +18,7 @@ class AuthController extends Controller
             'redirectUri'  => 'https://maulanasopian.my.id/auth/whmcs/callback',
             'urlAuthorize' => 'https://devmy.antmedia.id/oauth/authorize.php',
             'urlAccessToken' => 'https://devmy.antmedia.id/oauth/token.php',
-            'issuer' => 'https://maulanasopian.my.id',
-            'urlResourceOwnerDetails' => '',
+            'urlResourceOwnerDetails' => 'https://devmy.antmedia.id/oauth/',
             'scopes' => ['openid'], // Sesuaikan dengan scope yang diperlukan
         ]);
 
