@@ -30,10 +30,11 @@ return [
         'secret' => env('AWS_SECRET_ACCESS_KEY'),
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
-    'whmcs2' => [
+    'whmcs' => [
         'client_id' => env('WHMCS_CLIENT_ID'),
         'client_secret' => env('WHMCS_CLIENT_SECRET'),
         'redirect' => env('WHMCS_REDIRECT_URI'),
+        'url' => env('WHMCS_URL'), // URL of your WHMCS installation
     ],
 
 ];

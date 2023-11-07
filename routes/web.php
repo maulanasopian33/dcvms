@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Route;
 use Jumbojett\OpenIDConnectClient;
 use DarthSoup\WhmcsApi\Client;
 use Illuminate\Http\Request;
+use Laravel\Socialite\Facades\Socialite;
 
 /*
 |--------------------------------------------------------------------------
@@ -56,7 +57,8 @@ return $name;
 
 
 Route::get('/whmcs',function(){
-    return dcvms::syncNow(1);
+    // return dcvms::syncNow(1);
+    return dcvms::syncNowAll();
 });
 
 
@@ -66,9 +68,11 @@ Route::get('/product',function(){
 
 // routes/web.php
 
-Route::get('auth/whmcs', [AuthController::class,'redirectToProvider']);
-Route::get('auth/whmcs/callback', [AuthController::class,'handleProviderCallback']);
+Route::get('/Oauth',function(Request $req){
+    return Socialite::driver('whmcs')->redirect();
+});
 
-Route::get('/a',function(Request $req){
-    return $req;
-})->name('datawhmcs');
+Route::get('/callback',function(Request $req){
+    $user = Socialite::driver('whmcs')->user();
+    return dcvms::getdata($user);
+});

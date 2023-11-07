@@ -13,7 +13,8 @@
         "laravel/tinker": "^2.8",
         "league/oauth2-client": "^2.7",
         "league/oauth2-github": "^3.1",
-        "miniorange/oauth-laravel-free": "^2.0"
+        "miniorange/oauth-laravel-free": "^2.0",
+        "socialiteproviders/whmcs": "^4.1"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",

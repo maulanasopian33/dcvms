@@ -25,6 +25,7 @@ class visit_dc extends Model
         'reason',
         'data_center',
         'Date',
-        'teams'
+        'teams',
+        'webcam'
     ];
 }

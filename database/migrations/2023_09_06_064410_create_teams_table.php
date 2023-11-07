@@ -17,7 +17,7 @@ return new class extends Migration
             $table->foreign('lead_id')->references('id_user')->on('users')->onDelete('cascade')->onUpdate('cascade');
             $table->string('name');
             $table->string('nik')->nullable();
-            $table->string('ktp')->nullable();
+            $table->longText('ktp')->nullable();
             $table->string('email');
             $table->string('phone');
             $table->timestamps();
