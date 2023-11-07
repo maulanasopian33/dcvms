@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e74fbae70b8cc5a97aa815eab9d3d729",
+    "content-hash": "e833047356c2bc82ad4fb7311e6d1219",
     "packages": [
         {
             "name": "brick/math",
@@ -2561,72 +2561,6 @@
             "time": "2023-04-16T18:19:15+00:00"
         },
         {
-            "name": "league/oauth2-github",
-            "version": "3.1.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/thephpleague/oauth2-github.git",
-                "reference": "97f31cd70e76f81e8f5b4e2ab6f3708e2db7ac18"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/oauth2-github/zipball/97f31cd70e76f81e8f5b4e2ab6f3708e2db7ac18",
-                "reference": "97f31cd70e76f81e8f5b4e2ab6f3708e2db7ac18",
-                "shasum": ""
-            },
-            "require": {
-                "ext-json": "*",
-                "league/oauth2-client": "^2.0",
-                "php": "^7.3 || ^8.0"
-            },
-            "require-dev": {
-                "mockery/mockery": "^1.4",
-                "phpunit/phpunit": "^9.5",
-                "squizlabs/php_codesniffer": "^3.6"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.0.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "League\\OAuth2\\Client\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Steven Maguire",
-                    "email": "stevenmaguire@gmail.com",
-                    "homepage": "https://github.com/stevenmaguire"
-                },
-                {
-                    "name": "Woody Gilk",
-                    "email": "woody.gilk@gmail.com",
-                    "homepage": "https://github.com/shadowhand"
-                }
-            ],
-            "description": "Github OAuth 2.0 Client Provider for The PHP League OAuth2-Client",
-            "keywords": [
-                "authorisation",
-                "authorization",
-                "client",
-                "github",
-                "oauth",
-                "oauth2"
-            ],
-            "support": {
-                "issues": "https://github.com/thephpleague/oauth2-github/issues",
-                "source": "https://github.com/thephpleague/oauth2-github/tree/3.1.0"
-            },
-            "time": "2022-11-04T14:01:49+00:00"
-        },
-        {
             "name": "league/oauth2-server",
             "version": "8.4.2",
             "source": {
@@ -2884,60 +2818,6 @@
                 }
             ],
             "time": "2021-06-28T04:27:21+00:00"
-        },
-        {
-            "name": "miniorange/oauth-laravel-free",
-            "version": "v2.0.6",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/miniOrangeDev/oauth-laravel-free.git",
-                "reference": "de277939a5e211d50c34600b13dade948ab1b62b"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/miniOrangeDev/oauth-laravel-free/zipball/de277939a5e211d50c34600b13dade948ab1b62b",
-                "reference": "de277939a5e211d50c34600b13dade948ab1b62b",
-                "shasum": ""
-            },
-            "require": {
-                "laravel/framework": ">=5.2",
-                "php": "^5.1 || ^7.1 || ^8.0"
-            },
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "providers": [
-                        "provider\\oauthServiceProvider"
-                    ]
-                }
-            },
-            "autoload": {
-                "files": [
-                    "src/connector.php"
-                ],
-                "psr-4": {
-                    "provider\\": "provider/"
-                },
-                "classmap": [
-                    "src/"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "BSD-3-Clause"
-            ],
-            "authors": [
-                {
-                    "name": "miniOrange Security Software Pvt Ltd",
-                    "email": "laravelsupport@xecurify.com"
-                }
-            ],
-            "description": "Laravel OAuth Single Sign On Solution. Make yourLaravel application as OAuth Client using this plugin. Laravel end users can login into Laravel application using their OAuth Provider / Server credentials.",
-            "support": {
-                "issues": "https://github.com/miniOrangeDev/oauth-laravel-free/issues",
-                "source": "https://github.com/miniOrangeDev/oauth-laravel-free/tree/v2.0.6"
-            },
-            "time": "2023-04-25T12:14:59+00:00"
         },
         {
             "name": "monolog/monolog",

@@ -20,6 +20,7 @@ class visit_dc extends Model
         'lead_phone',
         'lead_nik',
         'lead_ktp',
+        'success',
         'lead_signature',
         'company_name',
         'reason',

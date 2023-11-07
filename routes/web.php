@@ -68,7 +68,7 @@ Route::get('/product',function(){
 
 // routes/web.php
 
-Route::get('/Oauth',function(Request $req){
+Route::get('/0auth',function(Request $req){
     return Socialite::driver('whmcs')->redirect();
 });
 

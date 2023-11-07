@@ -19,11 +19,13 @@ class VisitDcController extends Controller
         ]);
     }
 
-    public function getall(){
+    public function getall(Request $req){
+
         return response()->json([
             "status"    => true,
             "message"   => "berhasil",
-            "data"      => visit_dc::all()
+            "data"      => visit_dc::orderBy('created_at',"DESC")->get()
+
         ]);
     }
 
@@ -66,7 +68,7 @@ class VisitDcController extends Controller
         } catch (\Throwable $th) {
             return response()->json([
                 "status" => false,
-                "message"=> "Gagal menghapus data",
+                "message"=> "Gagal menambahkan data",
                 "error"=> $th->getMessage()
             ]);
         }
@@ -85,9 +87,28 @@ class VisitDcController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, visit_dc $visit_dc)
+    public function update(Request $req)
     {
-        //
+        try {
+
+            $data = visit_dc::findOrFail($req->uid);
+            $data->update([
+                "success" => $req->success
+            ]);
+            return response()->json([
+                "status" => true,
+                "message"=> "Berhasil Mengupdate Status Data Visit ".$data->name
+
+            ]);
+     } catch (\Throwable $th) {
+        //throw $th;
+        return response()->json([
+            "status" => false,
+            "message"=> "Gagal mengupdate data",
+            "error"=> $th
+
+        ]);
+     }
     }
 
     /**

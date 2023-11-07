@@ -60,4 +60,11 @@ class AdminController extends Controller
             "data"   => $data
         ]);
     }
+    public function getall(){
+        return response()->json([
+            "status" => true,
+            "message"=> "getdata",
+            "data"   => Admin::all()
+        ]);
+    }
 }

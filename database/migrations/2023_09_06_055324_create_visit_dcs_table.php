@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('lead_email')->index();
             $table->bigInteger('lead_phone');
             $table->bigInteger('lead_nik');
+            $table->integer('success')->default('0');
             $table->longText('lead_ktp');
             $table->longText('webcam');
             $table->longText('lead_signature');

@@ -54,7 +54,9 @@ Route::get('/sync',function(){
 Route::post('/admin/login',[AdminController::class, 'login']);
 Route::middleware(['auth:api','checkscope:admin'])->group(function(){
     Route::get('/admin/getdata',[AdminController::class,'getdata']);
+    Route::get('/admin/getalluser',[AdminController::class,'getall']);
     Route::get('/visitdc',[VisitDcController::class,'getall']);
+    Route::put('/visitdc/update',[VisitDcController::class,'update']);
 });
 
 
