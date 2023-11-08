@@ -7,7 +7,12 @@ use Illuminate\Support\Facades\Route;
 use Jumbojett\OpenIDConnectClient;
 use DarthSoup\WhmcsApi\Client;
 use Illuminate\Http\Request;
+use PhpOffice\PhpWord\Shared\ZipArchive;
 use Laravel\Socialite\Facades\Socialite;
+use Mpdf\Mpdf;
+use Mpdf\Output\Destination;
+use PhpOffice\PhpWord\IOFactory;
+use PhpOffice\PhpWord\TemplateProcessor;
 
 /*
 |--------------------------------------------------------------------------
@@ -42,17 +47,19 @@ Route::get('/login',function(){
 })->name('login');
 
 Route::get('/test',function(){
-    // $oidc = new OpenIDConnectClient('https://pucukidea.us.auth0.com', // Provider URl
-    //                             'Heib6H7ywMakHBopw5cC2UmsH3Oq25Vq', // Client ID
-    //                             'moHq9kj2lztlT_X9lH78YbZdnvbKmFooGGuFljMDR1UiQnAqmWpnEPHRsg_wrtO6'); // client secret
-// $oidc->setCertPath('/path/to/my.cert');
-    $oidc = new OpenIDConnectClient('https://devmy.antmedia.id/oauth/authorize.php', // Provider URl
-                                'PT-SEMUT-DATA-IN.4c6d0b56064e2a63fa10657fff829fa4', // Client ID
-                                'nFd3xAKPhaJ3fWh8Xf496uqv42wk3fPdlCf1OXUAIYgyFFdPa1JjeHZ95YwpZw36QzwSjs9St2+CSc/vzw0I+A=='); // client secret
-$oidc->setRedirectURL('http://localhost:8000/test'); //redirect url
-$oidc->authenticate();
-$name = $oidc->requestUserInfo('given_name');
-return $name;
+    // $templateProcessor = new TemplateProcessor('template.docx');
+    // // $templateProcessor->setValue('firstname', 'John');
+    // $values = [
+    //     ['no' => 1, 'Jenis' => 'Batman', 'des' => 'Gotham City', 'seri' => 'Gotham City'],
+    //     ['no' => 2, 'Jenis' => 'Batman', 'des' => 'Gotham City', 'seri' => 'Gotham City'],
+    //     ['no' => 3, 'Jenis' => 'Batman', 'des' => 'Gotham City', 'seri' => 'Gotham City'],
+    //     ['no' => 4, 'Jenis' => 'Batman', 'des' => 'Gotham City', 'seri' => 'Gotham City'],
+    // ];
+    // $templateProcessor->setImageValue('ttd', 'i.png');
+    // $templateProcessor->cloneRowAndSetValues('no', $values);
+    // $pathToSave = 'tes.docx';
+    // $templateProcessor->saveAs($pathToSave);
+    //Load temp file
 });
 
 
