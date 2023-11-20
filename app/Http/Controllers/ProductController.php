@@ -34,9 +34,15 @@ class ProductController extends Controller
 
     public function getdatalimit(Request $req){
         if($req['limit'] === 'all'){
-            $data = product::where('id_user',$req['id'])->get();
+            $data = product::where('id_user',$req['id'])
+            ->where('productName','LIKE', '%server%')
+            // ->where('productName', 'not like', "%Dedicate%")
+            ->get();
         }else{
-            $data = product::where('id_user',$req['id'])->limit($req['limit'])->get();
+            $data = product::where('id_user',$req['id'])
+            ->where('productName','LIKE', '%server%')
+            ->where('productName', 'not like', "%Dedicate%")
+            ->limit($req['limit'])->get();
         }
         return response()->json([
             "data" => $data

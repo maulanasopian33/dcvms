@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\visit_dc;
 use App\Http\Controllers\Controller;
+use App\Models\productdetail;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -15,7 +16,7 @@ class VisitDcController extends Controller
     public function index($id)
     {
         return response()->json([
-            'datas' => visit_dc::where('id_user',$id)->get()
+            'datas' => visit_dc::with('users')->where('id_user',$id)->get()
         ]);
     }
 
@@ -35,6 +36,30 @@ class VisitDcController extends Controller
     public function store(Request $request)
     {
         try {
+            switch ($request->reason) {
+                case 'Installation':
+                    foreach ($request->dataserver as $key => $value) {
+                        $railkit = false;
+                        if($value['railkit'] === 'Tersedia'){ $railkit = true;}
+                        $produk = [
+                            'productId'     => 1,
+                            'merek'         => $value['merek'],
+                            'jenis_server'  => $value['category'],
+                            'SN'            => $value['sn'],
+                            'ukuran'        => $value['ukuran'],
+                            'psu'           => $value['psu'],
+                            'railkit'       => $railkit,
+                            'visit_id'      => $request->UID,
+                            'datacenter'    => $request->data_center,
+                        ];
+                        $produkdetail = productdetail::create($produk);
+                    }
+                    break;
+
+                default:
+                    # code...
+                    break;
+            }
             $req = [
                 'UID'             => $request->UID,
                 'id_user'         => $request->id_user,
@@ -49,7 +74,9 @@ class VisitDcController extends Controller
                 'data_center'     => $request->data_center,
                 'reason'          => $request->reason,
                 'teams'           => $request->teams,
-                'webcam'          => $request->webcam
+                'webcam'          => $request->webcam,
+                'server_maintenance' => $request->server_maintenance,
+                'serverid'        => 1
             ];
             $data = visit_dc::create($req);
             $update = User::findOrFail($request->id_user);
@@ -60,6 +87,7 @@ class VisitDcController extends Controller
                 'name'      => $update->name,
                 'email'     => $update->email,
             ]);
+
             return response()->json([
                 "status" => true,
                 "message"=> "Berhasil Menambahkan Data Visit "
@@ -68,8 +96,8 @@ class VisitDcController extends Controller
         } catch (\Throwable $th) {
             return response()->json([
                 "status" => false,
-                "message"=> "Gagal menambahkan data",
-                "error"=> $th->getMessage()
+                "message"=> "Gagal Menambahkan Data Visit ",
+                "data"   => $th->getMessage()
             ]);
         }
     }

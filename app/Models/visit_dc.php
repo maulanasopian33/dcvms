@@ -19,6 +19,7 @@ class visit_dc extends Model
         'lead_email',
         'lead_phone',
         'lead_nik',
+        'serverid',
         'lead_ktp',
         'success',
         'lead_signature',
@@ -27,6 +28,12 @@ class visit_dc extends Model
         'data_center',
         'Date',
         'teams',
-        'webcam'
+        'webcam',
+        'server_maintenance'
     ];
+
+
+    public function users(){
+        return $this->belongsTo(User::class, "id_user");
+    }
 }

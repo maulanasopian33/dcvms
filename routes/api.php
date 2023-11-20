@@ -4,6 +4,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\dcvms;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ProductdetailController;
 use App\Http\Controllers\TeamsController;
 use App\Http\Controllers\VisitDcController;
 use App\Models\User;
@@ -44,6 +45,8 @@ Route::post('/visitdc',[VisitDcController::class,'store']);
 Route::post('/visitdc/delete/{uid}',[VisitDcController::class,'destroy']);
 Route::get('/visitdc/{id}',[VisitDcController::class,'index']);
 Route::get('/visitdc/report/{uid}',[VisitDcController::class,'getbyUID']);
+Route::get('/produk/detail/{visitid}',[ProductdetailController::class, 'getbyVisitId']);
+Route::get('/produk/detail/produkid/{id}',[ProductdetailController::class, 'getbyproductId']);
 Route::get('/sync/{id}',function($id){
     return dcvms::syncNow($id);
 });
@@ -59,10 +62,6 @@ Route::middleware(['auth:api','checkscope:admin'])->group(function(){
     Route::get('/visitdc',[VisitDcController::class,'getall']);
     Route::put('/visitdc/update',[VisitDcController::class,'update']);
 });
-
-
-
-// test php word
 
 
 

@@ -55,7 +55,7 @@ class dcvms extends Controller
         }else{
             self::prosessData($data,new User(),$id);
         }
-        return "Done";
+        return true;
     }
     static public function getdata($data){
         $client = new Client();
@@ -63,20 +63,31 @@ class dcvms extends Controller
         $client->url(env('WHMCS_API_URL'));
         $clientData = $client->Client()->getClientsDetails(['email'=>$data['email']]);
         $user = User::find($clientData['client_id']);
-        $token = $user->createToken('API Token',['user'])->accessToken;
-        $data = [
-            "userId"    => $clientData['client_id'],
-            "token"     => $token
-        ];
-        // return base64_encode(json_encode($data));
-        return redirect('http://localhost:5173/login/'.base64_encode(json_encode($data)));
-        // return $clientData;
+        if(self::syncNow($clientData['client_id'])){
+            $token = $user->createToken('API Token',['user'])->accessToken;
+            $data = [
+                "userId"    => $clientData['client_id'],
+                "token"     => $token
+            ];
+            return redirect('http://localhost:5173/login/'.base64_encode(json_encode($data)));
+        }
     }
     static public function getProduct(){
         $client = new Client();
         $client->authenticate(env('WHMCS_API_IDENTIFIER'), env('WHMCS_API_SECRET'), Client::AUTH_API_CREDENTIALS);
         $client->url(env('WHMCS_API_URL'));
         $clientProduct = $client->Client()->getClientsProducts(['clientid'=>3]);
+
+        if($clientProduct['products'] !== ''){
+        }
+        return $clientProduct;
+        // return 'kosong';
+    }
+    static public function getProducts(){
+        $client = new Client();
+        $client->authenticate(env('WHMCS_API_IDENTIFIER'), env('WHMCS_API_SECRET'), Client::AUTH_API_CREDENTIALS);
+        $client->url(env('WHMCS_API_URL'));
+        $clientProduct = $client->orders()->getProducts();
 
         if($clientProduct['products'] !== ''){
         }

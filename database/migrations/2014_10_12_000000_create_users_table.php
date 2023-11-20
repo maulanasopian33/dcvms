@@ -15,7 +15,7 @@ return new class extends Migration
             $table->unsignedBigInteger('id_user')->primary();
             $table->string('name')->index();
             $table->string('email')->unique();
-            $table->string('ktp')->nullable();
+            $table->longText('ktp')->nullable();
             $table->string('phone')->unique();
             $table->string('nik')->nullable();
             $table->timestamps();
