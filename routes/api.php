@@ -65,6 +65,7 @@ Route::middleware(['auth:admin','checkscope:admin'])->group(function(){
     Route::get('/admin/getalluser',[AdminController::class,'getall']);
     Route::get('/visitdc',[VisitDcController::class,'getall']);
     Route::put('/visitdc/update',[VisitDcController::class,'update']);
+    Route::get('/admin/visitdc/{uid}',[VisitDcController::class,'getbyUID']);
 });
 
 Route::post('/b',function(Request $req){

@@ -68,5 +68,6 @@ class Kernel extends HttpKernel
 
     protected $routeMiddleware = [
         'checkscope' => \App\Http\Middleware\ScopeCheck::class,
+        'pdflimit'   => \App\Http\Middleware\limitpdf::class
     ];
 }

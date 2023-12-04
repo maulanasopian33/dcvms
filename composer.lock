@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9b6d7f28aa070e51ddf5d2536fcad66c",
+    "content-hash": "709214204e8426842902e8a801558dec",
     "packages": [
         {
             "name": "barryvdh/laravel-dompdf",
@@ -1362,6 +1362,54 @@
                 }
             ],
             "time": "2023-08-27T10:19:19+00:00"
+        },
+        {
+            "name": "ilovepdf/ilovepdf-php",
+            "version": "v1.2.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ilovepdf/ilovepdf-php.git",
+                "reference": "e0c0d584fd2b65b668f412a8e6e255fe09021a4c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ilovepdf/ilovepdf-php/zipball/e0c0d584fd2b65b668f412a8e6e255fe09021a4c",
+                "reference": "e0c0d584fd2b65b668f412a8e6e255fe09021a4c",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*",
+                "firebase/php-jwt": "^6.0",
+                "guzzlehttp/guzzle": "^7.4",
+                "php": ">=7.3"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^9.5",
+                "vimeo/psalm": "^4.21"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Ilovepdf\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "ilovepdf",
+                    "email": "info@ilovepdf.com"
+                }
+            ],
+            "description": "iLovePDF Php Api",
+            "homepage": "https://ilovepdf.com/",
+            "support": {
+                "issues": "https://github.com/ilovepdf/ilovepdf-php/issues",
+                "source": "https://github.com/ilovepdf/ilovepdf-php/tree/v1.2.3"
+            },
+            "time": "2022-10-14T09:46:37+00:00"
         },
         {
             "name": "laminas/laminas-escaper",

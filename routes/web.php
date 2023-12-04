@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Route;
 use Jumbojett\OpenIDConnectClient;
 use DarthSoup\WhmcsApi\Client;
 use Illuminate\Http\Request;
+use Ilovepdf\OfficepdfTask;
 use PhpOffice\PhpWord\Settings;
 use Laravel\Socialite\Facades\Socialite;
 use PhpOffice\PhpWord\Element\Image;
@@ -59,27 +60,38 @@ Route::get('/test',function(){
     // $templateProcessor->cloneRowAndSetValues('no', $values);
     // $pathToSave = 'tes.pdf';
     // $templateProcessor->saveAs($pathToSave);
-    // Load temp file
-    // pdf settings
-    $dompdf = base_path('vendor/dompdf/dompdf');
-    Settings::setPdfRendererPath($dompdf);
-    Settings::setPdfRendererName('DomPDF');
-
-    $content = IOFactory::load(public_path('tes.docx'));
-
-    $pdfwriter = IOFactory::createWriter($content,'PDF');
-    $pdfwriter->save(public_path('hasil.pdf'));
-
-
 });
 
+Route::get('/pdf', function(){
+    return 'test';
+    $myTask = new OfficepdfTask('project_public_4700007d28979563a8f4be0ef0dd878a_HpDRz9c49a43d172dddde64870caed23d9890','secret_key_98330738ab0daf2235f454ef2e9565cb_heiZwc069a97ae69d12007552f9c88be6c10c');
 
+// // file var keeps info about server file id, name...
+// // it can be used latter to cancel file
+// $file = $myTask->addFile('tes.docx');
+
+// // process files
+// $myTask->execute();
+
+// // and finally download file. If no path is set, it will be downloaded on current folder
+$myTask->download();
+})->middleware(['pdflimit']);
 Route::get('/whmcs',function(){
     // return dcvms::syncNow(1);
     return dcvms::syncNowAll();
 });
 
+Route::get('/getdata',function(){
+    $client = new Client();
+    $client->authenticate(env('WHMCS_API_IDENTIFIER'), env('WHMCS_API_SECRET'), Client::AUTH_API_CREDENTIALS);
+    $client->url(env('WHMCS_API_URL'));
+    // $clientProduct  = $client->Client()->getClientsProducts(['clientid'=>3]);
+    $clientData     = $client->Client()->getClientsDetails(['clientid'=>3]);
 
+    // $data['data']       = $clientData;
+
+    return response()->json($clientData);
+});
 Route::get('/product',function(){
     return dcvms::getProduct();
 });

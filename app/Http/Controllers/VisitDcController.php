@@ -108,7 +108,7 @@ class VisitDcController extends Controller
     public function getbyUID($uid)
     {
         return response()->json([
-            'datas' => visit_dc::where('UID',$uid)->get()
+            'data' => visit_dc::where('UID',$uid)->get()
         ]);
     }
 

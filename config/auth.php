@@ -44,6 +44,10 @@ return [
             'driver' => 'passport',
             'provider' => 'users',
         ],
+        'pdf' => [
+            'driver' => 'passport',
+            'provider' => 'admins',
+        ],
         'admin' => [
             'driver' => 'passport',
             'provider' => 'admins',
