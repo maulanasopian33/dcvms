@@ -20,7 +20,7 @@ class AdminController extends Controller
                 'err'     => $validate->errors()
             ]);
         }
-        $login = Admin::where('username',$req->username)->first();
+        $login = admin::where('username',$req->username)->first();
         if(!$login){
             return response()->json([
                 'status'    => false,
@@ -28,7 +28,7 @@ class AdminController extends Controller
             ]);
         }
         if(password_verify($req->password,$login->password)){
-            $token = $login->createToken('API Token',['admin'])->accessToken;
+            $token = $login->createToken('admin token',['admin'])->accessToken;
             return response()->json([
                 'status'    => true,
                 'message'   => "berhasil login",
@@ -66,5 +66,48 @@ class AdminController extends Controller
             "message"=> "getdata",
             "data"   => Admin::all()
         ]);
+    }
+
+    public function addadmin(Request $req){
+        $validate = Validator::make($req->all(),[
+            'username' => 'required',
+            'fullname' => 'required',
+            'password' => 'required'
+        ]);
+        if($validate->fails()){
+            return response()->json([
+                'status'    => false,
+                'message'   => 'gagal menyimpan data',
+                'err'     => $validate->errors()
+            ]);
+        }
+        try {
+            $data = [
+                "fullname"  => $req->fullname,
+                "username"  => $req->username,
+                "password"  => bcrypt($req->password)
+            ];
+            $save = admin::create($data);
+
+            if($save){
+                return response()->json([
+                    "status" => true,
+                    "message"=> "Berhasil menyimpan data",
+                    "data"   => $save
+                ]);
+            }else{
+                return response()->json([
+                    "status" => false,
+                    "message"=> "Gagal menyimpan data, coba lagi",
+                    "data"   => $data
+                ]);
+            }
+        } catch (\Throwable $th) {
+            return response()->json([
+                "status" => false,
+                "message"=> "Gagal menyimpan data, coba lagi",
+                "data"   => $th
+            ]);
+        }
     }
 }

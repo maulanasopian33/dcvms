@@ -3,14 +3,14 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\dcvms;
 use App\Models\User;
+use Barryvdh\DomPDF\PDF;
 use Illuminate\Support\Facades\Route;
 use Jumbojett\OpenIDConnectClient;
 use DarthSoup\WhmcsApi\Client;
 use Illuminate\Http\Request;
-use PhpOffice\PhpWord\Shared\ZipArchive;
+use PhpOffice\PhpWord\Settings;
 use Laravel\Socialite\Facades\Socialite;
-use Mpdf\Mpdf;
-use Mpdf\Output\Destination;
+use PhpOffice\PhpWord\Element\Image;
 use PhpOffice\PhpWord\IOFactory;
 use PhpOffice\PhpWord\TemplateProcessor;
 
@@ -57,9 +57,20 @@ Route::get('/test',function(){
     // ];
     // $templateProcessor->setImageValue('ttd', 'i.png');
     // $templateProcessor->cloneRowAndSetValues('no', $values);
-    // $pathToSave = 'tes.docx';
+    // $pathToSave = 'tes.pdf';
     // $templateProcessor->saveAs($pathToSave);
-    //Load temp file
+    // Load temp file
+    // pdf settings
+    $dompdf = base_path('vendor/dompdf/dompdf');
+    Settings::setPdfRendererPath($dompdf);
+    Settings::setPdfRendererName('DomPDF');
+
+    $content = IOFactory::load(public_path('tes.docx'));
+
+    $pdfwriter = IOFactory::createWriter($content,'PDF');
+    $pdfwriter->save(public_path('hasil.pdf'));
+
+
 });
 
 

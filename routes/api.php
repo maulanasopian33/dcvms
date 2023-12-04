@@ -7,6 +7,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProductdetailController;
 use App\Http\Controllers\TeamsController;
 use App\Http\Controllers\VisitDcController;
+use App\Models\admin;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -23,13 +24,15 @@ use PhpOffice\PhpWord\TemplateProcessor;
 |
 */
 
-Route::middleware(['auth:api','checkscope:admin'])->group(function(){
+Route::middleware(['auth:admin','checkscope:admin'])->group(function(){
     Route::get('/test',function(){
         return 'hhhh';
     });
 });
 Route::get('/get', function(){
-    $user = User::find(3);
+    $users = admin::where('username','sopian')->first();
+    $user = admin::find($users->id);
+    // return $user;
     $token = $user->createToken('API Token',['admin'])->accessToken;
     return $token;
 });
@@ -56,12 +59,14 @@ Route::get('/sync',function(){
 
 // admin route
 Route::post('/admin/login',[AdminController::class, 'login']);
-Route::middleware(['auth:api','checkscope:admin'])->group(function(){
+Route::middleware(['auth:admin','checkscope:admin'])->group(function(){
     Route::get('/admin/getdata',[AdminController::class,'getdata']);
+    Route::post('/admin/user',[AdminController::class,'addadmin']);
     Route::get('/admin/getalluser',[AdminController::class,'getall']);
     Route::get('/visitdc',[VisitDcController::class,'getall']);
     Route::put('/visitdc/update',[VisitDcController::class,'update']);
 });
 
-
-
+Route::post('/b',function(Request $req){
+    return base64_encode($req->file('text')->get());
+});

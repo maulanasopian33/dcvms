@@ -164,6 +164,7 @@ return [
          * Application Service Providers...
          */
         App\Providers\AppServiceProvider::class,
+        Barryvdh\DomPDF\ServiceProvider::class,
         App\Providers\AuthServiceProvider::class,
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
@@ -183,7 +184,8 @@ return [
 
     'aliases' => Facade::defaultAliases()->merge([
         // 'Example' => App\Facades\Example::class,
-        'Whmcs' => DarthSoup\Whmcs\Facades\Whmcs::class
+        'Whmcs' => DarthSoup\Whmcs\Facades\Whmcs::class,
+        'PDF' => Barryvdh\DomPDF\Facade::class,
     ])->toArray(),
 
 ];
