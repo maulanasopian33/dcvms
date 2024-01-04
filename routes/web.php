@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\dcvms;
+use App\Http\Controllers\SuratController;
+use App\Models\surat;
 use App\Models\User;
 use Barryvdh\DomPDF\PDF;
 use Illuminate\Support\Facades\Route;
@@ -11,6 +13,8 @@ use Illuminate\Http\Request;
 use Ilovepdf\OfficepdfTask;
 use PhpOffice\PhpWord\Settings;
 use Laravel\Socialite\Facades\Socialite;
+use ParagonIE\ConstantTime\Base64;
+use ParagonIE\ConstantTime\Base64UrlSafe;
 use PhpOffice\PhpWord\Element\Image;
 use PhpOffice\PhpWord\IOFactory;
 use PhpOffice\PhpWord\TemplateProcessor;
@@ -105,4 +109,14 @@ Route::get('/0auth',function(Request $req){
 Route::get('/callback',function(Request $req){
     $user = Socialite::driver('whmcs')->user();
     return dcvms::getdata($user);
+});
+
+Route::get('/surat/i/{id}',[SuratController::class,'suratmasuk']);
+Route::get('/surat/o/{id}',[SuratController::class,'suratkeluar']);
+Route::get('/base/{id}',function($id){
+    return urlencode(base64_encode('40/ANT/XII/23'));
+});
+
+Route::get('/tes', function(){
+    return response()->json(surat::with('product.productdetail')->where('id','1')->get());
 });

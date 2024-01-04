@@ -20,8 +20,8 @@ return new class extends Migration
             $table->string('lead_email')->index();
             $table->bigInteger('lead_phone');
             $table->bigInteger('lead_nik');
-            $table->unsignedBigInteger('serverid')->index();
-            $table->foreign('serverid')->references('productId')->on('productdetails')->onDelete('cascade')->onUpdate('cascade');
+            $table->unsignedBigInteger('productId')->index();
+            $table->foreign('productId')->references('id')->on('products')->onDelete('cascade')->onUpdate('cascade');
             $table->integer('success')->default('0');
             $table->longText('lead_ktp');
             $table->longText('webcam');

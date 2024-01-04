@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use DarthSoup\WhmcsApi\Api\Products;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -19,7 +20,7 @@ class visit_dc extends Model
         'lead_email',
         'lead_phone',
         'lead_nik',
-        'serverid',
+        'productId',
         'lead_ktp',
         'success',
         'lead_signature',
@@ -35,5 +36,9 @@ class visit_dc extends Model
 
     public function users(){
         return $this->belongsTo(User::class, "id_user");
+    }
+
+    public function product(){
+        return $this->belongsto(product::class, "productId");
     }
 }

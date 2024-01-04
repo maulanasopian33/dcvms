@@ -13,4 +13,14 @@ class product extends Model
     public function users(){
         return $this->belongsTo(User::class, "id_user");
     }
+    public function surat(){
+        return $this->belongsTo(surat::class, "productId");
+    }
+
+    public function visitdc(){
+        return $this->belongsTo(visit_dc::class, "id");
+    }
+    public function productdetail(){
+        return $this->hasMany(productdetail::class, "productId");
+    }
 }

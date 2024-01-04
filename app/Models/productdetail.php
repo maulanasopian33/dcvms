@@ -20,4 +20,8 @@ class productdetail extends Model
         'railkit',
         'datacenter',
     ];
+
+    public function product(){
+        return $this->belongsto(product::class, "orderId");
+    }
 }

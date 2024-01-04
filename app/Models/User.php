@@ -24,7 +24,14 @@ class User extends Authenticatable
         'name',
         'email',
         'ktp',
-        'nik'
+        'nik',
+        'position',
+        'address',
+        'company_name',
+        'company_address',
+        'company_phone',
+        'no_npwp'
+
     ];
 
     public function teams(){
@@ -34,7 +41,7 @@ class User extends Authenticatable
         return $this->hasMany(product::class, "id_user");
     }
     public function visitdc(){
-        return $this->hasMany(visit_dc::class, "id_user");
+        return $this->hasMany(visit_dc::class, "teams");
     }
 
 }

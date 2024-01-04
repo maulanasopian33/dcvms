@@ -100,6 +100,10 @@ class dcvms extends Controller
         $user->name     = $data['data']['fullname'];
         $user->email    = $data['data']['email'];
         $user->phone    = $data['data']['phonenumber'];
+        $user->address  = $data['data']['address1'];
+        $user->company_name = $data['data']['companyname'];
+        $user->company_address = $data['data']['address1'];
+        $user->no_npwp = $data['data']['customfields1'];
         $user->save();
         // sync Data Product
         if($data['product']['products'] !== ''){

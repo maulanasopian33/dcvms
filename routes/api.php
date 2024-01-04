@@ -5,6 +5,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Controllers\dcvms;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProductdetailController;
+use App\Http\Controllers\SuratController;
 use App\Http\Controllers\TeamsController;
 use App\Http\Controllers\VisitDcController;
 use App\Models\admin;
@@ -56,7 +57,6 @@ Route::get('/sync/{id}',function($id){
 Route::get('/sync',function(){
     return dcvms::syncNowAll();
 });
-
 // admin route
 Route::post('/admin/login',[AdminController::class, 'login']);
 Route::middleware(['auth:admin','checkscope:admin'])->group(function(){
@@ -66,8 +66,7 @@ Route::middleware(['auth:admin','checkscope:admin'])->group(function(){
     Route::get('/visitdc',[VisitDcController::class,'getall']);
     Route::put('/visitdc/update',[VisitDcController::class,'update']);
     Route::get('/admin/visitdc/{uid}',[VisitDcController::class,'getbyUID']);
+    Route::post('/admin/surat/',[SuratController::class,'create']);
 });
+Route::put('/admin/productdetail/{id}',[ProductdetailController::class,"update"]);
 
-Route::post('/b',function(Request $req){
-    return base64_encode($req->file('text')->get());
-});

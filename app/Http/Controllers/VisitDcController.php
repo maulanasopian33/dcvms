@@ -76,7 +76,7 @@ class VisitDcController extends Controller
                 'teams'           => $request->teams,
                 'webcam'          => $request->webcam,
                 'server_maintenance' => $request->server_maintenance,
-                'serverid'        => 1
+                'productId'        => 1
             ];
             $data = visit_dc::create($req);
             $update = User::findOrFail($request->id_user);
@@ -108,7 +108,7 @@ class VisitDcController extends Controller
     public function getbyUID($uid)
     {
         return response()->json([
-            'data' => visit_dc::where('UID',$uid)->get()
+            'data' => visit_dc::with('product.productdetail','users')->where('UID',$uid)->get()
         ]);
     }
 
