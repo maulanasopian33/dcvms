@@ -1,23 +1,15 @@
 <?php
 
-use App\Http\Controllers\AuthController;
 use App\Http\Controllers\dcvms;
 use App\Http\Controllers\SuratController;
-use App\Models\surat;
+use App\Mail\notifMail;
 use App\Models\User;
-use Barryvdh\DomPDF\PDF;
 use Illuminate\Support\Facades\Route;
-use Jumbojett\OpenIDConnectClient;
 use DarthSoup\WhmcsApi\Client;
 use Illuminate\Http\Request;
-use Ilovepdf\OfficepdfTask;
-use PhpOffice\PhpWord\Settings;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Laravel\Socialite\Facades\Socialite;
-use ParagonIE\ConstantTime\Base64;
-use ParagonIE\ConstantTime\Base64UrlSafe;
-use PhpOffice\PhpWord\Element\Image;
-use PhpOffice\PhpWord\IOFactory;
-use PhpOffice\PhpWord\TemplateProcessor;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,6 +23,7 @@ use PhpOffice\PhpWord\TemplateProcessor;
 */
 
 Route::get('/', function () {
+    return "asd";
     // return view('welcome');
 });
 
@@ -85,5 +78,32 @@ Route::get('/callback',function(Request $req){
 Route::get('/surat/i/{id}',[SuratController::class,'suratmasuk']);
 Route::get('/surat/o/{id}',[SuratController::class,'suratkeluar']);
 Route::get('/base/{id}',function($id){
-    return urlencode(base64_encode('40/ANT/XII/23'));
+    return rawUrlEncode(base64_encode('dasdsasdas'));
 });
+
+Route::get('/test',function(){
+    $details = [
+        'subject'       => "Request DC - ",
+        'tanggal'       => 'request->Date',
+        'dc'            => 'request->data_center',
+        'nama'          => 'request->lead_name',
+        'email'         => 'request->email',
+        'perusahaan'    => 'request->company_name',
+        'keperluan'     => 'request->reason',
+        'url'           => '',
+        'from'          => 'maulana@antmediahost.com'
+    ];
+    Mail::to("maulana@antmediahost.com")->send(new notifMail($details));
+    return $details['subject'];
+});
+
+Route::get('/cek',function(){
+    $data = "http://localhost:8000/storage/ttd/ttd-team-1708311913.png";
+    return explode("storage/",$data)[1];
+    // if(filter_var("http://localhost/asdas", FILTER_VALIDATE_URL)){
+    //     return "url";
+    // }else{
+    //     return "bukan";
+    // }
+});
+

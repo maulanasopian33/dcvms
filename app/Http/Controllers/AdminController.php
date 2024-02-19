@@ -72,6 +72,7 @@ class AdminController extends Controller
         $validate = Validator::make($req->all(),[
             'username' => 'required',
             'fullname' => 'required',
+            'email'    => 'required',
             'password' => 'required'
         ]);
         if($validate->fails()){
@@ -85,6 +86,7 @@ class AdminController extends Controller
             $data = [
                 "fullname"  => $req->fullname,
                 "username"  => $req->username,
+                "email"     => $req->email,
                 "password"  => bcrypt($req->password)
             ];
             $save = admin::create($data);

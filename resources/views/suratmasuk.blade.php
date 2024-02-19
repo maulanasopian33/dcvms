@@ -124,7 +124,7 @@ td{
                 @endforeach
             </tbody>
         </table>
-        <p>Untuk selanjutkanya dilakukan aktifasi dan installasi perangkat tersebut : </p>
+        <p>Untuk selanjutnya dilakukan aktifasi dan installasi perangkat tersebut : </p>
         <table style="width: 100%;">
             <tr>
                 <td>

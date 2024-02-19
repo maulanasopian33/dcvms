@@ -30,6 +30,7 @@ class visit_dc extends Model
         'Date',
         'teams',
         'webcam',
+        'file_surat',
         'server_maintenance'
     ];
 
@@ -38,7 +39,7 @@ class visit_dc extends Model
         return $this->belongsTo(User::class, "id_user");
     }
 
-    public function product(){
-        return $this->belongsto(product::class, "productId");
+    public function surat(){
+        return $this->hasMany(surat::class, "uuid_visitdc");
     }
 }

@@ -36,9 +36,13 @@ class surat extends Model
         'client_signature',
         'dokumentasi',
         'productId',
+        'uuid_visitdc'
     ];
 
     public function product(){
-        return $this->hasMany(product::class, "id");
+        return $this->belongsTo(product::class, "productId");
+    }
+    public function visitdc(){
+        return $this->belongsTo(visit_dc::class, "UID");
     }
 }

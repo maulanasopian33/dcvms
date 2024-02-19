@@ -67,6 +67,10 @@ Route::middleware(['auth:admin','checkscope:admin'])->group(function(){
     Route::put('/visitdc/update',[VisitDcController::class,'update']);
     Route::get('/admin/visitdc/{uid}',[VisitDcController::class,'getbyUID']);
     Route::post('/admin/surat/',[SuratController::class,'create']);
+    Route::put('/admin/surat/update',[SuratController::class,'update']);
+    Route::get('/admin/surat/{id}',[SuratController::class,'getdata']);
+    Route::post('admin/surat/i/{id}',[SuratController::class,'suratmasuk']);
+    Route::post('admin/surat/unloading/{id}',[SuratController::class,'suratkeluar']);
 });
 Route::put('/admin/productdetail/{id}',[ProductdetailController::class,"update"]);
 

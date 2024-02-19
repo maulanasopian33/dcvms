@@ -35,12 +35,12 @@ td{
                 <tr>
                     <td>Nama Lengkap</td>
                     <td>:</td>
-                    <td>mmmm</td>
+                    <td>{{ $support_name }}</td>
                 </tr>
                 <tr>
                     <td>Jabatan</td>
                     <td>:</td>
-                    <td>{{ $support_position }}</td>
+                    <td>IT Support</td>
                 </tr>
                 <tr>
                     <td>Alamat Email</td>

@@ -20,11 +20,9 @@ return new class extends Migration
             $table->string('lead_email')->index();
             $table->bigInteger('lead_phone');
             $table->bigInteger('lead_nik');
-            $table->unsignedBigInteger('productId')->index();
-            $table->foreign('productId')->references('id')->on('products')->onDelete('cascade')->onUpdate('cascade');
+            $table->string('productId');
             $table->integer('success')->default('0');
             $table->longText('lead_ktp');
-            $table->longText('webcam');
             $table->longText('lead_signature');
             $table->string('company_name');
             $table->longText('server_maintenance');
@@ -32,6 +30,7 @@ return new class extends Migration
             $table->string('data_center');
             $table->string('Date');
             $table->string('teams');
+            $table->string('file_surat')->nullable();
             $table->timestamps();
         });
     }

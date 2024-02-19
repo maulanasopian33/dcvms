@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\admin;
 use App\Models\surat;
+use App\Models\visit_dc;
 use Carbon\Carbon;
 use chillerlan\QRCode\QRCode;
 use Illuminate\Http\Request;
@@ -12,17 +14,31 @@ use Illuminate\Support\Str;
 
 class SuratController extends Controller
 {
-    public function create(Request $req){
-        $ttd_client = self::savefile($req->client_signature,'ttd/','ttd-client-');
-        $ttd_team   = self::savefile($req->tim_signature,'ttd/','ttd-team-');
+    public function update(Request $req){
+        if (filter_var($req->client_signature, FILTER_VALIDATE_URL)) {
+            $ttd_client = explode("storage/",$req->client_signature)[1];
+        } else {
+            $ttd_client = self::savefile($req->client_signature,'ttd/','ttd-client-');
+        }
+        if (filter_var($req->tim_signature, FILTER_VALIDATE_URL)) {
+            $ttd_team = explode("storage/",$req->tim_signature)[1];
+        } else {
+            $ttd_team   = self::savefile($req->tim_signature,'ttd/','ttd-team-');
+        }
         $ktp = [];
         foreach ($req->ktp as $key => $value) {
-            array_push($ktp, self::savefile($value['img'],'ktp/','ktp-'));
+            array_push($ktp, explode("storage/",$value['img'])[1]);
         }
         $dokumentasi = [];
         foreach ($req->dokumentasi as $key => $value) {
-            array_push($dokumentasi, self::savefile($value['data'],'dokumentasi/','dokumentasi-'));
+            if (filter_var($value['data'], FILTER_VALIDATE_URL)) {
+                array_push($dokumentasi, explode("storage/",$value['data'])[1]);
+            } else {
+                array_push($dokumentasi, self::savefile($value['data'],'dokumentasi/','dokumentasi-'));
+            }
         }
+        $support = admin::where('id', $req->supportID)->get();
+
         $postdata = [
             'fullname'          => $req->name,
             'email'             => $req->email,
@@ -39,23 +55,77 @@ class SuratController extends Controller
             'no_rack'           => $req->rack,
             'switch'            => $req->switch,
             'port'              => $req->port,
-            'service'           => '$req->service',
+            'service'           => 'Colocation',
             'waktu_layanan'     => '',
             'os'                => $req->os,
             'arsitektur'        => $req->arsitektur,
             'control_panel'     => $req->controlPanel,
             'servers'           => '',
             'support_signature' => $ttd_team,
-            'support_name'      => 'AS',
-            'support_email'     => 'SD',
+            'support_name'      => $support[0]->fullname,
+            'support_email'     => $support[0]->email,
             'client_signature'  => $ttd_client,
             'dokumentasi'       => json_encode($dokumentasi),
-            'productId'         => '1',
+            'productId'         => $req->productId,
+            'uuid_visitdc'      => $req->uid
+        ];
+        $in = surat::find($req->id)->update($postdata);
+        return response()->json([
+            "status" => true,
+            "message"=> "Berhasil Mengupdate Surat",
+            "data"   => $in
+
+        ]);
+    }
+    public function create(Request $req){
+        $ttd_client = self::savefile($req->client_signature,'ttd/','ttd-client-');
+        $ttd_team   = self::savefile($req->tim_signature,'ttd/','ttd-team-');
+        $ktp = [];
+        foreach ($req->ktp as $key => $value) {
+            array_push($ktp, self::savefile($value['img'],'ktp/','ktp-'));
+        }
+        $dokumentasi = [];
+        foreach ($req->dokumentasi as $key => $value) {
+            array_push($dokumentasi, self::savefile($value['data'],'dokumentasi/','dokumentasi-'));
+        }
+
+        $support = admin::where('id', $req->supportID)->get();
+
+
+        $postdata = [
+            'fullname'          => $req->name,
+            'email'             => $req->email,
+            'phone_number'      => $req->phone,
+            'nik'               => $req->nik,
+            'ktp'               => json_encode($ktp),
+            'address'           => $req->address,
+            'position'          => $req->position,
+            'company_name'      => $req->company,
+            'company_npwp'      => $req->npwp,
+            'company_address'   => $req->address2,
+            'no_surat'          => $req->nosurat,
+            'data_center'       => $req->data_center,
+            'no_rack'           => $req->rack,
+            'switch'            => $req->switch,
+            'port'              => $req->port,
+            'service'           => 'Colocation',
+            'waktu_layanan'     => '',
+            'os'                => $req->os,
+            'arsitektur'        => $req->arsitektur,
+            'control_panel'     => $req->controlPanel,
+            'servers'           => '',
+            'support_signature' => $ttd_team,
+            'support_name'      => $support[0]->fullname,
+            'support_email'     => $support[0]->email,
+            'client_signature'  => $ttd_client,
+            'dokumentasi'       => json_encode($dokumentasi),
+            'productId'         => $req->productId,
+            'uuid_visitdc'      => $req->uid
         ];
         $in = surat::create($postdata);
         return response()->json([
             "status" => true,
-            "message"=> "Berhasil Menambahkan Data Visit ",
+            "message"=> "Berhasil Menyimpan Surat",
             "data"   => $in
 
         ]);
@@ -72,11 +142,12 @@ class SuratController extends Controller
         $filename = $name.time().'.'.$imageType;
         $imageData = base64_decode($base64ImageParts[1]);
         Storage::put('public/'.$path.$filename,$imageData);
-        return url('storage/'.$path.$filename);
+        return $path.$filename;
     }
     public function suratmasuk($id){
         $key = base64_decode(urldecode($id));
         $surat = surat::with('product.productdetail')->where('no_surat',$key)->get();
+
         if(count($surat) == 0){
             return response()->json([
                 "status" => false,
@@ -88,7 +159,7 @@ class SuratController extends Controller
         $mpdf = new \Mpdf\Mpdf(['format' => 'A4']);
 
         // Menambahkan konten ke mPDF
-        $filename = 'Installation '.$surat[0]->company_name;
+        $filename = 'Installation '.$surat[0]->company_name.'-'.Carbon::now()->isoFormat('D-M-Y');
         $mpdf->SetTitle($filename);
         // $mpdf->AddFont('arial', '', resource_path('font/arial.ttf'));
         // $mpdf->SetFont('arial');
@@ -98,8 +169,13 @@ class SuratController extends Controller
         $data = self::preparedata($surat[0]);
         $mpdf->WriteHTML(view('suratmasuk',$data)->render());
         $mpdf->Output(storage_path('app/public/surat/'.$filename.'.pdf'), \Mpdf\Output\Destination::FILE);
+
+        $requestdc = visit_dc::findOrFail($surat[0]->uuid_visitdc);
+        $requestdc->update([
+            'file_surat' => asset('storage/surat/'.$filename.'.pdf')
+        ]);
         return response()->json([
-            "status" => false,
+            "status" => true,
             "message"=> "Surat berhasil di buat",
             "data"   => asset('storage/surat/'.$filename.'.pdf')
         ]);
@@ -108,6 +184,7 @@ class SuratController extends Controller
     public function suratkeluar($id){
         $key = base64_decode(urldecode($id));
         $surat = surat::with('product.productdetail')->where('no_surat',$key)->get();
+
         if(count($surat) == 0){
             return response()->json([
                 "status" => false,
@@ -119,15 +196,26 @@ class SuratController extends Controller
         $mpdf = new \Mpdf\Mpdf(['format' => 'A4']);
 
         // Menambahkan konten ke mPDF
-        $mpdf->SetTitle('My Title');
+        $filename = 'Installation '.$surat[0]->company_name.'-'.Carbon::now()->isoFormat('D-M-Y');
+        $mpdf->SetTitle($filename);
+        // $mpdf->AddFont('arial', '', resource_path('font/arial.ttf'));
+        // $mpdf->SetFont('arial');
         $mpdf->SetWatermarkImage(storage_path('app/public/bg.png')); // Ganti dengan path ke gambar latar belakang Anda
         $mpdf->showWatermarkImage = true;
         $mpdf->watermarkImageAlpha = 1;
         $data = self::preparedata($surat[0]);
-        // $mpdf->WriteHTML(file_get_contents('./template.html'));
         $mpdf->WriteHTML(view('suratkeluar',$data)->render());
-        // $mpdf->Output('nama_file.pdf', \Mpdf\Output\Destination::FILE);
-        $mpdf->Output('nama_file.pdf', \Mpdf\Output\Destination::INLINE);
+        $mpdf->Output(storage_path('app/public/surat/'.$filename.'.pdf'), \Mpdf\Output\Destination::FILE);
+
+        $requestdc = visit_dc::findOrFail($surat[0]->uuid_visitdc);
+        $requestdc->update([
+            'file_surat' => asset('storage/surat/'.$filename.'.pdf')
+        ]);
+        return response()->json([
+            "status" => true,
+            "message"=> "Surat berhasil di buat",
+            "data"   => asset('storage/surat/'.$filename.'.pdf')
+        ]);
     }
     public function preparedata($data){
         $data = [
@@ -155,13 +243,12 @@ class SuratController extends Controller
             'client_signature'  => "data:image/png;base64,".base64_encode(file_get_contents(storage_path('app/public/'.$data['client_signature']))),
             'support_signature' => "data:image/png;base64,".base64_encode(file_get_contents(storage_path('app/public/'.$data['support_signature']))),
             'tanggal'           => self::tanggalKeTeks(Carbon::now()->isoFormat('dddd D M Y')),
-            'produk'            => $data->product[0]->productdetail,
+            'produk'            => $data->product->productdetail,
             'QR'                => (new QRCode())->render("http://localhost:5173/ceksurat/".base64_encode($data['no_surat']))
         ];
         return $data;
     }
-    function tanggalKeTeks($tanggal)
-    {
+    function tanggalKeTeks($tanggal){
         // Pisahkan tanggal, bulan, dan tahun
         $pecah = explode(" ", $tanggal);
         $hari = $pecah[0];
@@ -200,5 +287,13 @@ class SuratController extends Controller
         }
 
         return $hari. " Tanggal " . ucfirst($teksTanggal) . " Bulan " . ucfirst($teksBulan) . " Tahun Dua Ribu " . ucfirst($angka[$tahun[2]]). ' Puluh '. ucfirst($angka[$tahun[3]]);
+    }
+
+    public function getdata($id){
+        return response()->json([
+            "status"    => true,
+            "message"   => "berhasil",
+            "data"      => surat::where('uuid_visitdc', $id)->get()
+        ]);
     }
 }

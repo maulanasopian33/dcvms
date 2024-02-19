@@ -39,8 +39,9 @@ return new class extends Migration
             $table->string('support_email');
             $table->string('client_signature');
             $table->longText('dokumentasi');
-            $table->unsignedBigInteger('productId')->index();
-            $table->foreign('productId')->references('id')->on('products')->onDelete('cascade')->onUpdate('cascade');
+            $table->unsignedBigInteger('productId');
+            $table->string('uuid_visitdc')->index();
+            $table->foreign('uuid_visitdc')->references('UID')->on('visit_dcs')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
     }

@@ -4,9 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\visit_dc;
 use App\Http\Controllers\Controller;
+use App\Mail\notifMail;
+use App\Models\product;
 use App\Models\productdetail;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class VisitDcController extends Controller
 {
@@ -35,6 +38,7 @@ class VisitDcController extends Controller
      */
     public function store(Request $request)
     {
+        $server = explode('/',$request->serverId)[0];
         try {
             switch ($request->reason) {
                 case 'Installation':
@@ -42,7 +46,7 @@ class VisitDcController extends Controller
                         $railkit = false;
                         if($value['railkit'] === 'Tersedia'){ $railkit = true;}
                         $produk = [
-                            'productId'     => 1,
+                            'productId'     => $server,
                             'merek'         => $value['merek'],
                             'jenis_server'  => $value['category'],
                             'SN'            => $value['sn'],
@@ -74,9 +78,9 @@ class VisitDcController extends Controller
                 'data_center'     => $request->data_center,
                 'reason'          => $request->reason,
                 'teams'           => $request->teams,
-                'webcam'          => $request->webcam,
+                'file_surat'         => $request->file_surat,
                 'server_maintenance' => $request->server_maintenance,
-                'productId'        => 1
+                'productId'        => $server
             ];
             $data = visit_dc::create($req);
             $update = User::findOrFail($request->id_user);
@@ -87,7 +91,18 @@ class VisitDcController extends Controller
                 'name'      => $update->name,
                 'email'     => $update->email,
             ]);
-
+            $mailData = [
+                'subject'       => "Request DC - ".$request->lead_name . ' ' . $request->data_center,
+                'tanggal'       => $request->Date,
+                'dc'            => $request->data_center,
+                'nama'          => $request->lead_name,
+                'email'         => $request->lead_email,
+                'perusahaan'    => $request->company_name,
+                'keperluan'     => $request->reason,
+                'from'          => $request->lead_email,
+                'url'           => 'http://localhost:5173/visitdc/report/'.base64_encode($request->UID)
+            ];
+            Mail::to("maulana@antmediahost.com")->send(new notifMail($mailData));
             return response()->json([
                 "status" => true,
                 "message"=> "Berhasil Menambahkan Data Visit "
@@ -107,8 +122,14 @@ class VisitDcController extends Controller
      */
     public function getbyUID($uid)
     {
+        $data = visit_dc::with('users')->where('UID',$uid)->get();
+        $temp = [];
+        foreach (explode(',',$data[0]->productId) as $key => $value) {
+            array_push($temp,product::with('productdetail')->find($value));
+        }
+        $data[0]['product'] = $temp;
         return response()->json([
-            'data' => visit_dc::with('product.productdetail','users')->where('UID',$uid)->get()
+            'data' => $data
         ]);
     }
 

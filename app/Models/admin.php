@@ -26,5 +26,5 @@ class admin extends Model implements Authenticatable
         return $this->{$this->getAuthIdentifierName()};
     }
 
-    protected $fillable=['username','fullname','password'];
+    protected $fillable=['username','fullname','email','password'];
 }

@@ -14,12 +14,9 @@ class product extends Model
         return $this->belongsTo(User::class, "id_user");
     }
     public function surat(){
-        return $this->belongsTo(surat::class, "productId");
+        return $this->hasMany(surat::class, "id");
     }
 
-    public function visitdc(){
-        return $this->belongsTo(visit_dc::class, "id");
-    }
     public function productdetail(){
         return $this->hasMany(productdetail::class, "productId");
     }
