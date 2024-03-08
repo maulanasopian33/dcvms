@@ -3,17 +3,34 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Mail\requestdc;
 use App\Models\product;
 use App\Models\teams;
 use App\Models\User;
 use Illuminate\Http\Request;
 use DarthSoup\WhmcsApi\Client;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 class dcvms extends Controller
 {
     /**
      * Display a listing of the resource.
      */
+    function sendemailrequest(Request $request){
+        $mailData = [
+            'subject'       => "Request Visit DC",
+            'name'          => $request->name,
+            'from'          => "maulanasopian12@gmail.com",
+            'url'           => $request->url
+        ];
+        Mail::to($request->email)->send(new requestdc($mailData));
+        return response()->json([
+            "status"    => true,
+            "message"   => "berhasil mengirim email",
+            "data"      => ''
+
+        ]);
+    }
     static function syncNowAll()
     {
         $client = new Client();
@@ -55,7 +72,7 @@ class dcvms extends Controller
         }else{
             self::prosessData($data,new User(),$id);
         }
-        return true;
+        return $data;
     }
     static public function getdata($data){
         $client = new Client();

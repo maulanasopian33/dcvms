@@ -37,7 +37,7 @@ Route::get('/get', function(){
     $token = $user->createToken('API Token',['admin'])->accessToken;
     return $token;
 });
-
+Route::post('/request/visit', [dcvms::class, 'sendemailrequest']);
 Route::get('/getUser/{id}', [Controller::class,'getUser']);
 Route::get('/product',[ProductController::class,"getdatalimit"]);
 Route::post('/teams',[TeamsController::class,'store']);
