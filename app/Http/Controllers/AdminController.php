@@ -112,4 +112,23 @@ class AdminController extends Controller
             ]);
         }
     }
+    public function destroy($uid)
+    {
+        try {
+            $data = Admin::findOrFail($uid);
+            $data->delete();
+            return response()->json([
+                "status" => true,
+                "message"=> "Berhasil Menghapus Data admin "
+
+            ]);
+        } catch (\Throwable $th) {
+            return response()->json([
+                "status" => false,
+                "message"=> "Gagal Menghapus",
+                "error"=> $th
+
+            ]);
+        }
+    }
 }

@@ -100,7 +100,51 @@ class VisitDcController extends Controller
                 'perusahaan'    => $request->company_name,
                 'keperluan'     => $request->reason,
                 'from'          => $request->lead_email,
-                'url'           => 'http://localhost:5173/visitdc/report/'.base64_encode($request->UID)
+                'url'           => 'http://localhost:5173/requestdc/report/'.base64_encode($request->UID)
+            ];
+            Mail::to("maulana@antmediahost.com")->send(new notifMail($mailData));
+            return response()->json([
+                "status" => true,
+                "message"=> "Berhasil Menambahkan Data Visit "
+
+            ]);
+        } catch (\Throwable $th) {
+            return response()->json([
+                "status" => false,
+                "message"=> "Gagal Menambahkan Data Visit ",
+                "data"   => $th->getMessage()
+            ]);
+        }
+    }
+    public function guestrequest(Request $request)
+    {
+        try {
+            $req = [
+                'UID'             => $request->UID,
+                'lead_email'      => $request->email,
+                'lead_phone'      => $request->phone,
+                'lead_nik'        => $request->nik,
+                'lead_ktp'        => $request->ktp,
+                'lead_signature'  => $request->name,
+                'company_name'    => $request->company_name,
+                'Date'            => $request->Date,
+                'data_center'        => $request->data_center,
+                'reason'             => "visit DC",
+                'teams'              => $request->teams,
+                'file_surat'         => "",
+                'server_maintenance' => "visit DC",
+            ];
+            $data = visit_dc::create($req);
+            $mailData = [
+                'subject'       => "Request Visit DC - " . $request->data_center,
+                'tanggal'       => $request->Date,
+                'dc'            => $request->data_center,
+                'nama'          => $request->name,
+                'email'         => $request->email,
+                'perusahaan'    => $request->company_name,
+                'keperluan'     => $request->reason,
+                'from'          => $request->email,
+                'url'           => 'http://localhost:5173/requestdc/report/'.base64_encode($request->UID)
             ];
             Mail::to("maulana@antmediahost.com")->send(new notifMail($mailData));
             return response()->json([

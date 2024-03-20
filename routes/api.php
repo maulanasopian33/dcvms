@@ -46,11 +46,13 @@ Route::get('/teams/{id}',[TeamsController::class,'index']);
 Route::post('/teams/delete/{uid}',[TeamsController::class,'destroy']);
 Route::get('/teams/getbyname/{id}/{data}',[TeamsController::class,'getbyname']);
 Route::post('/visitdc',[VisitDcController::class,'store']);
+Route::post('/request/guest/visitdc',[VisitDcController::class,'guestrequest']);
 Route::post('/visitdc/delete/{uid}',[VisitDcController::class,'destroy']);
 Route::get('/visitdc/{id}',[VisitDcController::class,'index']);
 Route::get('/visitdc/report/{uid}',[VisitDcController::class,'getbyUID']);
 Route::get('/produk/detail/{visitid}',[ProductdetailController::class, 'getbyVisitId']);
 Route::get('/produk/detail/produkid/{id}',[ProductdetailController::class, 'getbyproductId']);
+
 Route::get('/sync/{id}',function($id){
     return dcvms::syncNow($id);
 });
@@ -62,6 +64,7 @@ Route::post('/admin/login',[AdminController::class, 'login']);
 Route::middleware(['auth:admin','checkscope:admin'])->group(function(){
     Route::get('/admin/getdata',[AdminController::class,'getdata']);
     Route::post('/admin/user',[AdminController::class,'addadmin']);
+    Route::post('/admin/user/delete/{uid}',[AdminController::class,'destroy']);
     Route::get('/admin/getalluser',[AdminController::class,'getall']);
     Route::get('/visitdc',[VisitDcController::class,'getall']);
     Route::put('/visitdc/update',[VisitDcController::class,'update']);
