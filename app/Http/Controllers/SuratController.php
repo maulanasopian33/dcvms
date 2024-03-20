@@ -269,6 +269,7 @@ class SuratController extends Controller
         ];
 
         // Ubah tanggal menjadi teks
+        $teksTanggal = "";
         if($tanggal < 12){
             $teksTanggal = $angka[$tanggal];
         }elseif($tanggal < 20){
