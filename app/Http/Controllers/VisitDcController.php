@@ -100,7 +100,7 @@ class VisitDcController extends Controller
                 'perusahaan'    => $request->company_name,
                 'keperluan'     => $request->reason,
                 'from'          => $request->lead_email,
-                'url'           => 'http://localhost:5173/requestdc/report/'.base64_encode($request->UID)
+                'url'           => env("FE_URL").'requestdc/report/'.base64_encode($request->UID)
             ];
             Mail::to("maulana@antmediahost.com")->send(new notifMail($mailData));
             return response()->json([
@@ -144,7 +144,7 @@ class VisitDcController extends Controller
                 'perusahaan'    => $request->company_name,
                 'keperluan'     => $request->reason,
                 'from'          => $request->email,
-                'url'           => 'http://localhost:5173/requestdc/report/'.base64_encode($request->UID)
+                'url'           => env("FE_URL").'requestdc/report/'.base64_encode($request->UID)
             ];
             Mail::to("maulana@antmediahost.com")->send(new notifMail($mailData));
             return response()->json([

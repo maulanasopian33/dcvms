@@ -244,7 +244,7 @@ class SuratController extends Controller
             'support_signature' => "data:image/png;base64,".base64_encode(file_get_contents(storage_path('app/public/'.$data['support_signature']))),
             'tanggal'           => self::tanggalKeTeks(Carbon::now()->isoFormat('dddd D M Y')),
             'produk'            => $data->product->productdetail,
-            'QR'                => (new QRCode())->render("http://localhost:5173/ceksurat/".base64_encode($data['no_surat']))
+            'QR'                => (new QRCode())->render(env("FE_URL")."ceksurat/".base64_encode($data['no_surat']))
         ];
         return $data;
     }

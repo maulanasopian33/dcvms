@@ -86,7 +86,7 @@ class dcvms extends Controller
                 "userId"    => $clientData['client_id'],
                 "token"     => $token
             ];
-            return redirect('http://localhost:5173/login/'.base64_encode(json_encode($data)));
+            return redirect(env("FE_URL").'login/'.base64_encode(json_encode($data)));
         }
     }
     static public function getProduct(){
