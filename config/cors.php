@@ -15,20 +15,20 @@ return [
     |
     */
 
-    'paths' => ['api/*', 'sanctum/csrf-cookie'],
+'paths' => ['api/*', 'sanctum/csrf-cookie'],
 
-    'allowed_methods' => ['*'],
+'allowed_methods' => ['OPTION','GET','POST','PUT','*'],
 
-    'allowed_origins' => ['http://localhost:5173'],
+'allowed_origins' => ['http://localhost:5173','https://dcms.maulanasopian.my.id'],
 
-    'allowed_origins_patterns' => [],
+'allowed_origins_patterns' => [],
 
-    'allowed_headers' => ['*'],
+'allowed_headers' => ['Content-Type', 'Authorization', 'Accept','*'],
 
-    'exposed_headers' => [],
+'exposed_headers' => [],
 
-    'max_age' => 0,
+'max_age' => 0,
 
-    'supports_credentials' => false,
+'supports_credentials' => false,
 
 ];

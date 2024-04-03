@@ -9,6 +9,7 @@
         "barryvdh/laravel-dompdf": "^2.0",
         "chillerlan/php-qrcode": "*",
         "darthsoup/php-whmcs-api": "^1.3",
+        "defuse/php-encryption": "^2.4",
         "ilovepdf/ilovepdf-php": "^1.2",
         "jenssegers/agent": "^2.6",
         "laravel/framework": "^10.10",
@@ -20,6 +21,8 @@
         "league/oauth2-client": "^2.7",
         "mpdf/mpdf": "^8.2",
         "phpoffice/phpword": "^1.1",
+        "phpseclib/phpseclib": "^3.0",
+        "phpseclib/phpseclib2_compat": "~1.0",
         "socialiteproviders/whmcs": "^4.1"
     },
     "require-dev": {

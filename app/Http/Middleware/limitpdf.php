@@ -23,12 +23,11 @@ class limitpdf
      */
     public function handle(Request $request, Closure $next): Response
     {
-        $key = "key"; // Key untuk identifikasi permintaan
-
-        if ($this->limiter->tooManyAttempts($key, 7)) {
-            return new Response('Terlalu banyak permintaan.', 429); // Kode status 429 untuk batasan terlampaui
-        }
-        $this->limiter->hit($key, 86400);
-        return $next($request);
+       return $next($request)
+        ->header('Access-Control-Allow-Origin', '*')
+        ->header('Access-Control-Allow-Methods', '*')
+        ->header('Access-Control-Allow-Credentials', true)
+        ->header('Access-Control-Allow-Headers', 'X-Requested-With,Content-Type,X-Token-Auth,Authorization')
+        ->header('Accept', 'application/json');
     }
 }

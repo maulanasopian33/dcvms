@@ -3,9 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\admin;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Validator;
 use Ilovepdf\OfficepdfTask;
+use App\Utils\ReCaptchaVerifier;
 class AdminController extends Controller
 {
     public function login(Request $req){
@@ -18,6 +21,21 @@ class AdminController extends Controller
                 'status'    => false,
                 'message'   => 'Login gagal silahkan coba kembali',
                 'err'     => $validate->errors()
+            ]);
+        }
+
+        $secret = env('secretKey');
+        $url = env('urlVerify');
+
+        $response = Http::post($url, [
+            'secret' => $secret,
+            'response' => $req->token,
+        ]);
+        if(!$response->successful()){
+            return response()->json([
+                'status'    => false,
+                'message'   => 'Login gagal silahkan coba kembali',
+                'err'     => $response->json()
             ]);
         }
         $login = admin::where('username',$req->username)->first();
@@ -130,5 +148,32 @@ class AdminController extends Controller
 
             ]);
         }
+    }
+
+    public function setAssignVPN(Request $req){
+        $validate = Validator::make($req->all(),[
+            'usernameVPN'   => 'required',
+            'usernameUser'  => 'required',
+            'setNull'       => 'required'
+        ]);
+        if($validate->fails()){
+            return response()->json([
+                'status'    => false,
+                'message'   => 'silahkan coba kembali',
+                'err'     => $validate->errors()
+            ]);
+        }
+        $user = User::where('name',$req->usernameUser)->first();
+        $assignvpn = '';
+        if(!$req->setNull){
+            $assignvpn = $req->usernameVPN;
+        }
+        $user->update([
+            'vpn' => $assignvpn
+        ]);
+        return response()->json([
+            'status'    => true,
+            'message'   => 'berhasil mengupdate data'
+        ]);
     }
 }

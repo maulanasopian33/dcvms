@@ -23,8 +23,7 @@ use Laravel\Socialite\Facades\Socialite;
 */
 
 Route::get('/', function () {
-    return "asd";
-    // return view('welcome');
+    return "v1 API DCMS";
 });
 
 // Route::get('/callback', function(){

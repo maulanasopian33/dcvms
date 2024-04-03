@@ -23,6 +23,7 @@ class User extends Authenticatable
         'id_user',
         'name',
         'email',
+        'vpn',
         'ktp',
         'nik',
         'position',

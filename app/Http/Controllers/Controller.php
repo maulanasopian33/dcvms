@@ -16,4 +16,11 @@ class Controller extends BaseController
             'data' => User::find($id)
         ]);
     }
+
+    public function getalluser(){
+        return response()->json([
+            'status' => true,
+            'data' => User::all()
+        ]);
+    }
 }

@@ -196,7 +196,7 @@ class SuratController extends Controller
         $mpdf = new \Mpdf\Mpdf(['format' => 'A4']);
 
         // Menambahkan konten ke mPDF
-        $filename = 'Installation '.$surat[0]->company_name.'-'.Carbon::now()->isoFormat('D-M-Y');
+        $filename = 'Unloading '.$surat[0]->company_name.'-'.Carbon::now()->isoFormat('D-M-Y');
         $mpdf->SetTitle($filename);
         // $mpdf->AddFont('arial', '', resource_path('font/arial.ttf'));
         // $mpdf->SetFont('arial');
@@ -296,5 +296,32 @@ class SuratController extends Controller
             "message"   => "berhasil",
             "data"      => surat::where('uuid_visitdc', $id)->get()
         ]);
+    }
+    public function getbyNomor($id){
+        $nomor = base64_decode($id);
+        $data = surat::where('no_surat', $nomor)->select('no_surat', 'updated_at','uuid_visitdc')->get();
+
+        if(count($data)>=1){
+            $visit = visit_dc::where('UID',$data[0]['uuid_visitdc'])->select('file_surat')->get();
+            $data[0]['url'] = $visit[0]['file_surat'];
+
+            if(str_contains($visit[0]['file_surat'],'Installation')){
+                $data[0]['prihal'] = 'Installation Server';
+            }else{
+                $data[0]['prihal'] = 'Unloading Server';
+            }
+            return response()->json([
+                "status"    => true,
+                "message"   => "data berhasil ditemukan",
+                "data"      =>  $data
+            ]);
+
+        }else{
+            return response()->json([
+                "status"    => false,
+                "message"   => "data tidak ditemukan",
+                "data"      =>  $data
+            ]);
+        }
     }
 }

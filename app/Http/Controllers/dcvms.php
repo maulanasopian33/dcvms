@@ -137,7 +137,7 @@ class dcvms extends Controller
                 }
                 $product->orderId       = $value['orderid'];
                 $product->id_user       = $pos;
-                $product->productName   = $value['translated_groupname'];
+                $product->productName   = $value['translated_name'].'/'.$value['translated_groupname'];
                 $product->domain        = $value['domain'];
                 $product->status        = $value['status'];
                 $product->regDate       = $value['regdate'];

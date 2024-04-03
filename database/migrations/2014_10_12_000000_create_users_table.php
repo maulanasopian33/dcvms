@@ -16,6 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('id_user')->primary();
             $table->string('name')->index();
             $table->string('email')->unique();
+            $table->string('vpn')->nullable();
             $table->longText('ktp')->nullable();
             $table->string('phone')->unique();
             $table->string('nik')->nullable();

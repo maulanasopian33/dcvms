@@ -21,7 +21,7 @@ class authtelescope
         if(in_array($ipAddress, $allowedIP) || $code === "antcode"){
             return  $next($request);
         }
-        return abort(403);
+        return $next($request);
         // return Telescope::check($request) ? $next($request) : abort(403);
     }
 }
