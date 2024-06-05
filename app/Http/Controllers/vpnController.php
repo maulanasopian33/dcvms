@@ -4,43 +4,74 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\RouterOSAPI;
+use App\Models\vpn;
 use Illuminate\Support\Facades\Validator;
 
 class vpnController extends Controller
 {
     function getall(){
+        $vpnData = vpn::all();
+        return response()->json([
+            'status' => true,
+            // 'data'   => $vpnData
+            'data'   => RSAClass::encrypt(json_encode($vpnData))
+        ]);
+    }
+    function syncAll(){
         $API = new RouterOSAPI();
         if ($API->connect(env('router_ip'), env('api_username'), env('api_password'))) {
             $API->write('/ppp/secret/print');
             $vpnUsers = $API->read();
             $API->disconnect();
-            return response()->json([
-                'status' => true,
-                'data'   => RSAClass::encrypt(json_encode($vpnUsers))
-            ]);
+            return self::storetoDB($vpnUsers);
         } else {
-            return false;
+            return response()->json([
+                'status' => false,
+                'data'  => "internal server error"
+            ]);
         }
     }
+    function storetoDB($data){
+        foreach ($data as $key => $value) {
+            $cek = vpn::where('vpnId',$value['.id'])->first();
+            $db = new vpn();
+            if($cek){
+                $db = $cek;
+            }
+            try {
+                $db->name = $value['name'];
+                $db->disabled = $value['disabled'];
+                $db->vpnId = $value['.id'];
+                $db->localAddress = $value['local-address'];
+                $db->remoteAddress = $value['remote-address'];
+                $db->password = $value['password'];
+                $db->save();
+            } catch (\Throwable $th) {
+                return response()->json([
+                    'status' => false,
+                    'data'  => $th->getMessage(),
+                    'message' => 'error menyimpan vpn'
+                ]);
+            }
+        }
+        return response()->json([
+            'status' => true,
+            'data'   => "berhasil melakukan sync data VPN"
+        ]);
+    }
     function getbyusername($id){
-        $API = new RouterOSAPI();
-        if ($API->connect(env('router_ip'), env('api_username'), env('api_password'))) {
-            $API->write('/ppp/secret/print');
-            $vpnUsers = $API->read();
-            $data = array_filter($vpnUsers, function($value) use ($id){
-                return $value['name'] === $id;
-            });
-            $API->disconnect();
-            return response()->json([
-                'status' => true,
-                'data'   =>RSAClass::encrypt(json_encode(array_values($data)))
-            ]);
-        } else {
+
+        $vpn = vpn::where('name',$id)->get();
+        if(!$vpn){
             return response()->json([
                 'status' => false,
                 'message'=> 'tidak dapat mengambil data'
             ]);
         }
+        return response()->json([
+            'status' => true,
+            'data'   =>RSAClass::encrypt(json_encode($vpn))
+        ]);
     }
     function disable(Request $req){
         if($req->status === 'disable'){
@@ -50,6 +81,7 @@ class vpnController extends Controller
                     'message'=> 'Tidak dapat terhubung ke Router'
                 ]);
             }
+            self::syncAll();
             return response()->json([
                 'status' => true,
                 'message'=> $req->name.' berhasil diubah menjadi disable'
@@ -62,6 +94,7 @@ class vpnController extends Controller
                     'message'=> 'Tidak dapat terhubung ke Router'
                 ]);
             }
+            self::syncAll();
             return response()->json([
                 'status' => true,
                 'message'=> $req->name.' berhasil diubah menjadi enable'

@@ -1,7 +1,9 @@
 <?php
 
 use App\Http\Controllers\dcvms;
+use App\Http\Controllers\RouterOSAPI;
 use App\Http\Controllers\SuratController;
+use App\Http\Controllers\vpnController;
 use App\Mail\notifMail;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
@@ -25,14 +27,6 @@ use Laravel\Socialite\Facades\Socialite;
 Route::get('/', function () {
     return "v1 API DCMS";
 });
-
-// Route::get('/callback', function(){
-//     $client = new Client();
-//         $client->authenticate(env('WHMCS_API_IDENTIFIER'), env('WHMCS_API_SECRET'), Client::AUTH_API_CREDENTIALS);
-//         $client->url(env('WHMCS_API_URL'));
-//         $clientProduct = $client->Authentication()->listOAuthCredentials();
-//     return $clientProduct;
-// });
 Route::get('/token',function(){
     $user = User::find(2);
     $token = $user->createToken('API Token')->accessToken;
@@ -80,29 +74,4 @@ Route::get('/base/{id}',function($id){
     return rawUrlEncode(base64_encode('dasdsasdas'));
 });
 
-Route::get('/test',function(){
-    $details = [
-        'subject'       => "Request DC - ",
-        'tanggal'       => 'request->Date',
-        'dc'            => 'request->data_center',
-        'nama'          => 'request->lead_name',
-        'email'         => 'request->email',
-        'perusahaan'    => 'request->company_name',
-        'keperluan'     => 'request->reason',
-        'url'           => '',
-        'from'          => 'maulana@antmediahost.com'
-    ];
-    Mail::to("maulana@antmediahost.com")->send(new notifMail($details));
-    return $details['subject'];
-});
-
-Route::get('/cek',function(){
-    $data = "http://localhost:8000/storage/ttd/ttd-team-1708311913.png";
-    return explode("storage/",$data)[1];
-    // if(filter_var("http://localhost/asdas", FILTER_VALIDATE_URL)){
-    //     return "url";
-    // }else{
-    //     return "bukan";
-    // }
-});
-
+Route::get('/generate/nosurat',[SuratController::class,'generateNosurat']);

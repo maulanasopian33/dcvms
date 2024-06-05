@@ -21,7 +21,7 @@ return new class extends Migration
             $table->bigInteger('lead_phone');
             $table->bigInteger('lead_nik');
             $table->string('productId');
-            $table->integer('success')->default('0');
+            $table->string('success')->default('Requested');
             $table->longText('lead_ktp');
             $table->longText('lead_signature');
             $table->string('company_name');
@@ -31,6 +31,7 @@ return new class extends Migration
             $table->string('Date');
             $table->string('teams');
             $table->string('file_surat')->nullable();
+            $table->longText('keterangan');
             $table->timestamps();
         });
     }

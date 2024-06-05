@@ -132,10 +132,7 @@ class SuratController extends Controller
     }
     public function savefile($file, $path, $name){
         if (!Str::contains($file,';base64,')) {
-            return response()->json([
-                'status' => false,
-                'message'=> 'gagal membaca file'
-            ]);
+            return '';
         }
         $base64ImageParts = explode(";base64,", $file);
         $imageType = explode("image/", $base64ImageParts[0])[1]; // Dapatkan jenis gambar
@@ -161,8 +158,6 @@ class SuratController extends Controller
         // Menambahkan konten ke mPDF
         $filename = 'Installation '.$surat[0]->company_name.'-'.Carbon::now()->isoFormat('D-M-Y');
         $mpdf->SetTitle($filename);
-        // $mpdf->AddFont('arial', '', resource_path('font/arial.ttf'));
-        // $mpdf->SetFont('arial');
         $mpdf->SetWatermarkImage(storage_path('app/public/bg.png')); // Ganti dengan path ke gambar latar belakang Anda
         $mpdf->showWatermarkImage = true;
         $mpdf->watermarkImageAlpha = 1;
@@ -171,15 +166,14 @@ class SuratController extends Controller
         $mpdf->Output(storage_path('app/public/surat/'.$filename.'.pdf'), \Mpdf\Output\Destination::FILE);
 
         $requestdc = visit_dc::findOrFail($surat[0]->uuid_visitdc);
-        $requestdc->update([
-            'file_surat' => asset('storage/surat/'.$filename.'.pdf')
-        ]);
+        $requestdc->file_surat = asset('storage/surat/'.$filename.'.pdf');
+        $requestdc->status = 'Completed';
+        $requestdc->save();
         return response()->json([
             "status" => true,
             "message"=> "Surat berhasil di buat",
             "data"   => asset('storage/surat/'.$filename.'.pdf')
         ]);
-        // $mpdf->Output($filename.'.pdf', \Mpdf\Output\Destination::INLINE);
     }
     public function suratkeluar($id){
         $key = base64_decode(urldecode($id));
@@ -198,8 +192,6 @@ class SuratController extends Controller
         // Menambahkan konten ke mPDF
         $filename = 'Unloading '.$surat[0]->company_name.'-'.Carbon::now()->isoFormat('D-M-Y');
         $mpdf->SetTitle($filename);
-        // $mpdf->AddFont('arial', '', resource_path('font/arial.ttf'));
-        // $mpdf->SetFont('arial');
         $mpdf->SetWatermarkImage(storage_path('app/public/bg.png')); // Ganti dengan path ke gambar latar belakang Anda
         $mpdf->showWatermarkImage = true;
         $mpdf->watermarkImageAlpha = 1;
@@ -208,9 +200,10 @@ class SuratController extends Controller
         $mpdf->Output(storage_path('app/public/surat/'.$filename.'.pdf'), \Mpdf\Output\Destination::FILE);
 
         $requestdc = visit_dc::findOrFail($surat[0]->uuid_visitdc);
-        $requestdc->update([
-            'file_surat' => asset('storage/surat/'.$filename.'.pdf')
-        ]);
+        $requestdc->file_surat = asset('storage/surat/'.$filename.'.pdf');
+        $requestdc->status = 'Completed';
+        $requestdc->save();
+
         return response()->json([
             "status" => true,
             "message"=> "Surat berhasil di buat",
@@ -323,5 +316,22 @@ class SuratController extends Controller
                 "data"      =>  $data
             ]);
         }
+    }
+    public function generateNosurat(){
+        $dataSurat = surat::orderBy('id', 'DESC')->select('no_surat')->get();
+        if($dataSurat === []){
+            $indexSurat = 0;
+        }else{
+            $indexSurat = explode('/',$dataSurat[0]['no_surat'])[0];
+        }
+        $romawi = ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X', 'XI', 'XII'];
+        $newIndex = $indexSurat + 1;
+        $formattedNumber = str_pad($newIndex, 3, '0', STR_PAD_LEFT);
+        $Month = $romawi[date('n') - 1];
+        $Year = date('Y');
+        return response()->json([
+            'status' => true,
+            'data' => $formattedNumber . '/BASTP/DCMS/SDI/' . $Month . '/' . $Year
+        ]);
     }
 }

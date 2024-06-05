@@ -19,7 +19,7 @@ class VisitDcController extends Controller
     public function index($id)
     {
         return response()->json([
-            'datas' => visit_dc::with('users')->where('id_user',$id)->get()
+            'datas' => visit_dc::with('users')->where('id_user',$id)->orderBy('created_at',"DESC")->get()
         ]);
     }
 
@@ -78,6 +78,7 @@ class VisitDcController extends Controller
                 'data_center'     => $request->data_center,
                 'reason'          => $request->reason,
                 'teams'           => $request->teams,
+                'keterangan'      => $request->keterangan,
                 'file_surat'         => $request->file_surat,
                 'server_maintenance' => $request->server_maintenance,
                 'productId'        => $server
@@ -102,7 +103,14 @@ class VisitDcController extends Controller
                 'from'          => $request->lead_email,
                 'url'           => env("FE_URL").'requestdc/report/'.base64_encode($request->UID)
             ];
-            Mail::to("maulana@antmediahost.com")->send(new notifMail($mailData));
+            $mailData['status'] = 'diterima';
+            $mailData['to'] = 'teams';
+            Mail::to(env('EMAIL_ADDRESS'))->send(new notifMail($mailData));
+            sleep(4);
+            $mailData['status'] = 'berhasil dikirim';
+            $mailData['to'] = $request->lead_name;
+            Mail::to($request->lead_email)->send(new notifMail($mailData));
+
             return response()->json([
                 "status" => true,
                 "message"=> "Berhasil Menambahkan Data Visit "
@@ -138,6 +146,8 @@ class VisitDcController extends Controller
             $mailData = [
                 'subject'       => "Request Visit DC - " . $request->data_center,
                 'tanggal'       => $request->Date,
+                'status'        => "diterima",
+                'to'            => $request->name,
                 'dc'            => $request->data_center,
                 'nama'          => $request->name,
                 'email'         => $request->email,
@@ -146,7 +156,7 @@ class VisitDcController extends Controller
                 'from'          => $request->email,
                 'url'           => env("FE_URL").'requestdc/report/'.base64_encode($request->UID)
             ];
-            Mail::to("maulana@antmediahost.com")->send(new notifMail($mailData));
+            Mail::to(env('EMAIL_ADDRESS'))->send(new notifMail($mailData));
             return response()->json([
                 "status" => true,
                 "message"=> "Berhasil Menambahkan Data Visit "
@@ -185,9 +195,24 @@ class VisitDcController extends Controller
         try {
 
             $data = visit_dc::findOrFail($req->uid);
-            $data->update([
-                "success" => $req->success
-            ]);
+            $data->status = $req->status;
+            $data->save();
+            $mailData = [
+                'subject'       => "Request DC - ".$data->lead_name . ' ' . $data->data_center,
+                'tanggal'       => $data->Date,
+                'dc'            => $data->data_center,
+                'nama'          => $data->lead_name,
+                'email'         => $data->lead_email,
+                'perusahaan'    => $data->company_name,
+                'keperluan'     => $data->reason,
+                'from'          => $data->lead_email,
+                'url'           => env("FE_URL").'requestdc/report/'.base64_encode($data->UID)
+            ];
+            if($data->status === 'Accepted'){
+                $mailData['status'] = 'telah dikonfirmasi oleh tim';
+                $mailData['to'] = $data->lead_name;
+                Mail::to(env('EMAIL_ADDRESS'))->send(new notifMail($mailData));
+            }
             return response()->json([
                 "status" => true,
                 "message"=> "Berhasil Mengupdate Status Data Visit ".$data->name

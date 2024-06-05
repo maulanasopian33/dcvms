@@ -31,6 +31,7 @@ class visit_dc extends Model
         'teams',
         'webcam',
         'file_surat',
+        'keterangan',
         'server_maintenance'
     ];
 

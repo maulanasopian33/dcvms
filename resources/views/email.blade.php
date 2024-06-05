@@ -96,11 +96,11 @@ a[x-apple-data-detectors] {
                   <td align="center" valign="top" style="padding:0;Margin:0;width:560px">
                    <table cellpadding="0" cellspacing="0" width="100%" role="presentation" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px">
                      <tr>
-                      <td align="left" class="es-m-txt-c" style="padding:0;Margin:0;padding-top:15px;padding-bottom:15px"><h1 style="Margin:0;line-height:15px;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;font-size:15px;font-style:normal;font-weight:bold;color:#333333">Dear Team,</h1></td>
+                      <td align="left" class="es-m-txt-c" style="padding:0;Margin:0;padding-top:15px;padding-bottom:15px"><h1 style="Margin:0;line-height:15px;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;font-size:15px;font-style:normal;font-weight:bold;color:#333333">Dear {{ $details['to'] }},</h1></td>
                      </tr>
                      <tr>
                       <td align="left" style="padding:0;Margin:0;padding-top:10px;padding-bottom:10px">
-                        <p>Request Datacenter diterima untuk tanggal {{ $details['tanggal'] }} di {{ $details['dc'] }}, dengan detail sebagai berikut :</p>
+                        <p>Request Datacenter {{ $details['status'] }} untuk tanggal {{ $details['tanggal'] }} di {{ $details['dc'] }}, dengan detail sebagai berikut :</p>
                         <table>
                             <tr>
                                 <td>Nama</td>
