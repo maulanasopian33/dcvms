@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use DarthSoup\WhmcsApi\Client;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
+use App\Http\Controllers\vpnController;
 class dcvms extends Controller
 {
     /**
@@ -20,7 +21,7 @@ class dcvms extends Controller
         $mailData = [
             'subject'       => "Request Visit DC",
             'name'          => $request->name,
-            'from'          => "maulanasopian12@gmail.com",
+            'from'          => env('MAIL_FROM_ADDRESS'),
             'url'           => $request->url
         ];
         Mail::to($request->email)->send(new requestdc($mailData));
@@ -62,9 +63,16 @@ class dcvms extends Controller
         $clients        = $client->Client()->getClients();
         $clientProduct  = $client->Client()->getClientsProducts(['clientid'=>(int)$id]);
         $clientData     = $client->Client()->getClientsDetails(['clientid'=>(int)$id]);
+        $filteredData = [];
+
+        foreach ($clientProduct['products']['product'] as $item) {
+            if (strpos($item['groupname'], 'Colocation') !== false) {
+                $filteredData[] = $item;
+            }
+        }
 
         $data['data']       = $clientData;
-        $data['product']    = $clientProduct;
+        $data['product']    = $filteredData;
 
         $user = User::find($id);
         if($user){
@@ -123,8 +131,8 @@ class dcvms extends Controller
         $user->no_npwp = $data['data']['customfields1'];
         $user->save();
         // sync Data Product
-        if($data['product']['products'] !== ''){
-            $products = $data['product']['products']['product'];
+        if($data['product'] !== ''){
+            $products = $data['product'];
             foreach ($products as $key => $value) {
                 $cek = product::where('orderId',$value['orderid'])->first();
                 $product = new product();

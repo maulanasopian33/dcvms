@@ -23,6 +23,7 @@ return new class extends Migration
             $table->string('company_name');
             $table->string('company_npwp');
             $table->string('company_address');
+            $table->string('company_phone');
             $table->string('no_surat');
             $table->string('data_center');
             $table->string('no_rack');

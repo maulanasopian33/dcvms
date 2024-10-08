@@ -127,6 +127,11 @@ a[x-apple-data-detectors] {
                                 <td>:</td>
                                 <td>{{ $details['keperluan'] }}</td>
                             </tr>
+                            <tr>
+                                <td>Keterangan</td>
+                                <td>:</td>
+                                <td>{{ $details['keterangan'] }}</td>
+                            </tr>
                         </table>
                         <p>Untuk informasi lebih lanjut, silahkan mengakses link berikut</p>
                       </td>

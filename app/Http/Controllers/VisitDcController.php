@@ -100,6 +100,7 @@ class VisitDcController extends Controller
                 'email'         => $request->lead_email,
                 'perusahaan'    => $request->company_name,
                 'keperluan'     => $request->reason,
+                'keterangan'      => $request->keterangan,
                 'from'          => $request->lead_email,
                 'url'           => env("FE_URL").'requestdc/report/'.base64_encode($request->UID)
             ];
@@ -147,7 +148,7 @@ class VisitDcController extends Controller
                 'subject'       => "Request Visit DC - " . $request->data_center,
                 'tanggal'       => $request->Date,
                 'status'        => "diterima",
-                'to'            => $request->name,
+                'to'            => "Teams",
                 'dc'            => $request->data_center,
                 'nama'          => $request->name,
                 'email'         => $request->email,
@@ -211,7 +212,7 @@ class VisitDcController extends Controller
             if($data->status === 'Accepted'){
                 $mailData['status'] = 'telah dikonfirmasi oleh tim';
                 $mailData['to'] = $data->lead_name;
-                Mail::to(env('EMAIL_ADDRESS'))->send(new notifMail($mailData));
+                Mail::to($data->lead_email)->send(new notifMail($mailData));
             }
             return response()->json([
                 "status" => true,

@@ -19,6 +19,7 @@ class surat extends Model
         'company_name',
         'company_npwp',
         'company_address',
+        'company_phone',
         'no_surat',
         'data_center',
         'no_rack',

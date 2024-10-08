@@ -101,6 +101,7 @@ class SuratController extends Controller
             'address'           => $req->address,
             'position'          => $req->position,
             'company_name'      => $req->company,
+            'company_phone'      => $req->company_phone,
             'company_npwp'      => $req->npwp,
             'company_address'   => $req->address2,
             'no_surat'          => $req->nosurat,

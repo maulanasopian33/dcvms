@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\Validator;
 class vpnController extends Controller
 {
     function getall(){
+        self::syncAll();
+        sleep(1000);
         $vpnData = vpn::all();
         return response()->json([
             'status' => true,
